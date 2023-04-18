@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createFFmpeg, FFmpeg } from '@ffmpeg/ffmpeg';
+import { bindCallback, map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,11 @@ export class FFmpegService {
   run(args: string[]): void {
     if (args && args[0] === "ffmpeg") args.shift();
     this.ffmpeg.run(...args);
+  }
+
+  progress(): Observable<number> {
+    const getObservable = bindCallback(this.ffmpeg.setProgress);
+    return getObservable().pipe(map(x => x.ratio));
   }
 
   writeFile(file: File): void {
