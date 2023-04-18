@@ -18,14 +18,7 @@ export class EditorComponent {
   ) {}
 
   run(): void {
-    console.log("running ffmpeg:");
-
-    const args = this.command
-      .split(/\s|\n/)
-      .filter(arg => arg !== "");
-
-    console.log(args);
-    this.argsService.setArgs(args);
+    this.argsService.setArgs(this.command);
     this.router.navigateByUrl("run");
   }
 

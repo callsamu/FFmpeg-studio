@@ -12,7 +12,13 @@ export class ArgsService {
     return this.args;
   }
 
-  setArgs(args: string[]) {
+  setArgs(argString: string) {
+    const args = argString
+      .split(/\s|\n/)
+      .filter(arg => arg !== "");
+
+    if (args && args[0] === "ffmpeg") args.shift();
     this.args = args;
+    console.log(this.args);
   }
 }

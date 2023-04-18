@@ -22,8 +22,6 @@ export class FFmpegService {
 
   run(): Promise<void> {
     const args = this.argsService.getArgs();
-    if (args && args[0] === "ffmpeg") args.shift();
-
     return this.ffmpeg.run(...args);
   }
 
