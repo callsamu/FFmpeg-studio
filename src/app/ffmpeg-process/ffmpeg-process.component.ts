@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ArgsService } from '../args.service';
 import { FFmpegService } from '../ffmpeg.service';
 
@@ -12,6 +12,8 @@ export class FFmpegProcessComponent {
   progress = 0;
   log = "";
 
+  @ViewChild('logger') logger?: ElementRef;
+
 
   constructor(
     private argsService: ArgsService,
@@ -22,7 +24,13 @@ export class FFmpegProcessComponent {
     this.ffmpegService.progress()
       .subscribe(x => this.progress = x);
     this.ffmpegService.logs()
-      .subscribe(log => this.log += log.message + '\n');
+      .subscribe(log => {
+        this.log += log.message + '\n'
+
+        if (!this.logger) return;
+        const logger = this.logger.nativeElement;
+        logger.scrollTo(0, logger.scrollHeight)
+      });
 
     if (!this.ffmpegService.ready) {
       this.ready = false;
