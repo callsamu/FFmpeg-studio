@@ -21,4 +21,10 @@ export class ArgsService {
     this.args = args;
     console.log(this.args);
   }
+
+  output(): string | undefined {
+    return this.args ?
+      this.args[this.args.length-1] :
+      undefined;
+  }
 }

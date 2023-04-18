@@ -48,12 +48,15 @@ export class FFmpegService {
     });
   }
 
-  output(): string {
-    const output = "output.mp4";
+  output(): string | null {
+    const output = this.argsService.output();
+    if (!output) return null;
+
 
     const array = this.ffmpeg.FS("readFile", output);
+    if (!array) return null;
 
-    const split = output.split("");
+    const split = output.split(".");
     const extension = split[split.length-1];
 
     return URL.createObjectURL(
