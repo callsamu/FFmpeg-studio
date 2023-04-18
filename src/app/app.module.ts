@@ -5,11 +5,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { EditorComponent } from './editor/editor.component';
+import { FFmpegProcessComponent } from './ffmpeg-process/ffmpeg-process.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EditorComponent
+    EditorComponent,
+    FFmpegProcessComponent
   ],
   imports: [
     BrowserModule,
