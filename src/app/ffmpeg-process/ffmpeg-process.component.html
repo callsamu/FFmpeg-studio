@@ -1,5 +1,7 @@
 <div *ngIf="ready; else notReady">
-  <h3>{{ progress }}%</h3>
+  <mat-progress-bar
+    mode="determinate"
+    [value]="progress"></mat-progress-bar>
   <textarea readonly
             #logger
             id="logger">{{ log }}</textarea>

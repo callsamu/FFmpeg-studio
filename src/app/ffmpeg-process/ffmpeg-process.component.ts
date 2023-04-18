@@ -36,7 +36,8 @@ export class FFmpegProcessComponent {
     }
 
     this.ffmpegService.run().then(() => {
-      this.output = this.ffmpegService.output();
+      const output = this.ffmpegService.output();
+      if (output) this.output = output;
     });
   }
 }

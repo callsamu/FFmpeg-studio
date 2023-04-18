@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { EditorComponent } from './editor/editor.component';
 import { FFmpegProcessComponent } from './ffmpeg-process/ffmpeg-process.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatProgressBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
