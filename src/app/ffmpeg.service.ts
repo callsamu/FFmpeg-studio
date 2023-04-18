@@ -46,4 +46,15 @@ export class FFmpegService {
       this.ffmpeg.FS("writeFile", file.name, array);
     });
   }
+
+  output(): Blob {
+    const output = "output.mp4";
+
+    const array = this.ffmpeg.FS("readFile", output);
+
+    const split = output.split("");
+    const extension = split[split.length-1];
+
+    return new Blob([array], {type: `video/${extension}`});
+  }
 }
