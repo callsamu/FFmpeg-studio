@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { createFFmpeg, FFmpeg } from '@ffmpeg/ffmpeg';
-import { bindCallback, map, Observable } from 'rxjs';
+import { bindCallback, map, Observable, observeOn, Observer, tap } from 'rxjs';
+
+export type Log = {
+  message: string;
+  type: string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -20,8 +25,19 @@ export class FFmpegService {
   }
 
   progress(): Observable<number> {
-    const getObservable = bindCallback(this.ffmpeg.setProgress);
-    return getObservable().pipe(map(x => x.ratio));
+    const ffmpeg = this.ffmpeg;
+
+    return new Observable((observer: Observer<number>) => {
+      ffmpeg.setProgress(x => observer.next(x.ratio * 100));
+    });
+  }
+
+  logs(): Observable<Log> {
+    const ffmpeg = this.ffmpeg;
+
+    return new Observable((observer: Observer<Log>) => {
+      ffmpeg.setLogger(log => observer.next(log));
+    });
   }
 
   writeFile(file: File): void {
