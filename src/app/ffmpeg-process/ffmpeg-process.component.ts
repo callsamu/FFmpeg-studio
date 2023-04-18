@@ -36,7 +36,7 @@ export class FFmpegProcessComponent {
     }
 
     this.ffmpegService.run().then(() => {
-      this.output = URL.createObjectURL(this.ffmpegService.output());
+      this.output = this.ffmpegService.output();
     });
   }
 }
