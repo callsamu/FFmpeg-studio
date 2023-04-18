@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
 import { FFmpegService } from '../ffmpeg.service';
 import { ArgsService } from '../args.service';
 import { Router } from '@angular/router';
