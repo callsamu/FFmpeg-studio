@@ -1,1 +1,15 @@
-<p>editor works!</p>
+<textarea
+  [(ngModel)]="command"
+  rows=10
+  cols=50>
+  {{ command }}
+</textarea>
+
+<input
+  #fileUpload
+  class="hide"
+  type="file"
+  (change)="onFileSelected($event)">
+<button (click)="fileUpload.click()">Add</button>
+
+<button (click)="run()">Run</button>
