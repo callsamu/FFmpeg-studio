@@ -24,12 +24,12 @@ export class EditorComponent {
     const input = event.currentTarget as HTMLInputElement;
     let fileList = input.files;
 
-    if (fileList) {
-      for (let i = 0; i < fileList.length; i ++) {
-        const file = fileList[i];
-        this.command += " " + file.name;
-        this.files.push(fileList[i]);
-      }
+    if (!fileList) return;
+
+    for (let i = 0; i < fileList.length; i ++) {
+      const file = fileList[i];
+      this.command += " " + file.name;
+      this.files.push(fileList[i]);
     }
   }
 }
