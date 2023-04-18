@@ -8,6 +8,9 @@ import { EditorComponent } from './editor/editor.component';
 import { FFmpegProcessComponent } from './ffmpeg-process/ffmpeg-process.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     FormsModule,
     BrowserAnimationsModule,
     MatProgressBarModule,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<mat-toolbar>
+  <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+  <span class="title"> New Command </span>
+</mat-toolbar>
+<mat-sidenav-container class="main">
+  <mat-sidenav #sidenav class="sidenav">
+    <p><a routerLink="new">New Command</a></p>
+    <p><a routerLink="new">Commands</a></p>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
