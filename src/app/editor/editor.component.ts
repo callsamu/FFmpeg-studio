@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { FFmpegService } from '../ffmpeg.service';
 
 @Component({
   selector: 'app-editor',
@@ -7,17 +9,21 @@ import { Component } from '@angular/core';
 })
 export class EditorComponent {
   command = "ffmpeg";
-  files: File[] = [];
+
+  constructor(
+    private ffmpegService: FFmpegService,
+    private location: Location,
+  ) {}
 
   run(): void {
     console.log("running ffmpeg:");
-    console.log(this.files.map(file => file.name));
 
     const args = this.command
       .split(/\s|\n/)
       .filter(arg => arg !== "");
 
     console.log(args);
+    this.location.go("run");
   }
 
   onFileSelected(event: Event): void {
@@ -28,8 +34,8 @@ export class EditorComponent {
 
     for (let i = 0; i < fileList.length; i ++) {
       const file = fileList[i];
-      this.command += " " + file.name;
-      this.files.push(fileList[i]);
+      this.command += file.name;
+      this.ffmpegService.writeFile(file);
     }
   }
 }
