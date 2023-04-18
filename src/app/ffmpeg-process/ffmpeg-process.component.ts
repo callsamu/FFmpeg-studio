@@ -14,7 +14,6 @@ export class FFmpegProcessComponent {
 
   @ViewChild('logger') logger?: ElementRef;
 
-
   constructor(
     private argsService: ArgsService,
     private ffmpegService: FFmpegService,

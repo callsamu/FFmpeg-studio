@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { createFFmpeg, FFmpeg } from '@ffmpeg/ffmpeg';
-import { bindCallback, map, Observable, observeOn, Observer, tap } from 'rxjs';
+import { Observable, Observer, } from 'rxjs';
 
 export type Log = {
   message: string;
