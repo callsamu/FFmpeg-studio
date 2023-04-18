@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createFFmpeg, FFmpeg } from '@ffmpeg/ffmpeg';
 import { Observable, Observer, } from 'rxjs';
+import { ArgsService } from './args.service';
 
 export type Log = {
   message: string;
@@ -14,13 +15,15 @@ export class FFmpegService {
   ffmpeg: FFmpeg;
   ready = false;
 
-  constructor() {
+  constructor(private argsService: ArgsService) {
     this.ffmpeg = createFFmpeg({ log: true });
     this.ffmpeg.load().then(() => this.ready = true);
   }
 
-  run(args: string[]): void {
+  run(): void {
+    const args = this.argsService.getArgs();
     if (args && args[0] === "ffmpeg") args.shift();
+
     this.ffmpeg.run(...args);
   }
 

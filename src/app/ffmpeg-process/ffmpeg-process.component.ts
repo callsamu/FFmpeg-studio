@@ -1,5 +1,4 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ArgsService } from '../args.service';
 import { FFmpegService } from '../ffmpeg.service';
 
 @Component({
@@ -15,7 +14,6 @@ export class FFmpegProcessComponent {
   @ViewChild('logger') logger?: ElementRef;
 
   constructor(
-    private argsService: ArgsService,
     private ffmpegService: FFmpegService,
   ) {}
 
@@ -36,6 +34,6 @@ export class FFmpegProcessComponent {
       return;
     }
 
-    this.ffmpegService.run(this.argsService.getArgs());
+    this.ffmpegService.run();
   }
 }
