@@ -68,8 +68,12 @@
               "browserTarget": "ffmpeg-studio:build:production"
             },
             "development": {
-              "browserTarget": "ffmpeg-studio:build:development"
-            }
+              "browserTarget": "ffmpeg-studio:build:development",
+              "headers": {
+                "Cross-Origin-Opener-Policy":"same-origin",
+                "Cross-Origin-Embedder-Policy":"require-corp"
+              }
+            },
           },
           "defaultConfiguration": "development"
         },
