@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 import { FFmpegService } from '../ffmpeg.service';
+import { ArgsService } from '../args.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-editor',
@@ -11,8 +13,9 @@ export class EditorComponent {
   command = "ffmpeg";
 
   constructor(
+    private argsService: ArgsService,
     private ffmpegService: FFmpegService,
-    private location: Location,
+    private router: Router,
   ) {}
 
   run(): void {
@@ -23,7 +26,8 @@ export class EditorComponent {
       .filter(arg => arg !== "");
 
     console.log(args);
-    this.location.go("run");
+    this.argsService.setArgs(args);
+    this.router.navigateByUrl("run");
   }
 
   onFileSelected(event: Event): void {
