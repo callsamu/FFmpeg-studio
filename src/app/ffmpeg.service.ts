@@ -20,11 +20,11 @@ export class FFmpegService {
     this.ffmpeg.load().then(() => this.ready = true);
   }
 
-  run(): void {
+  run(): Promise<void> {
     const args = this.argsService.getArgs();
     if (args && args[0] === "ffmpeg") args.shift();
 
-    this.ffmpeg.run(...args);
+    return this.ffmpeg.run(...args);
   }
 
   progress(): Observable<number> {
@@ -50,7 +50,7 @@ export class FFmpegService {
     });
   }
 
-  output(): Blob {
+  output(): string {
     const output = "output.mp4";
 
     const array = this.ffmpeg.FS("readFile", output);
@@ -58,6 +58,8 @@ export class FFmpegService {
     const split = output.split("");
     const extension = split[split.length-1];
 
-    return new Blob([array], {type: `video/${extension}`});
+    return URL.createObjectURL(
+      new Blob([array], {type: `video/${extension}`})
+    );
   }
 }

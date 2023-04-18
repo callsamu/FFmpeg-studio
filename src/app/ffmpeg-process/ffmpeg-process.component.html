@@ -2,9 +2,10 @@
   <h3>{{ progress }}%</h3>
   <textarea readonly
             #logger
-            (change)=(logger.scrollTo(0,logger.scrollHeight))
             id="logger">{{ log }}</textarea>
+  <a *ngIf="output" href="{{ output }}">Download</a>
 </div>
+
 <ng-template #notReady>
   <h1> Error: FFmpeg is Not Loaded </h1>
 </ng-template>

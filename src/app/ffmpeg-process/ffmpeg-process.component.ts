@@ -8,6 +8,7 @@ import { FFmpegService } from '../ffmpeg.service';
 })
 export class FFmpegProcessComponent {
   ready = true;
+  output?: string;
   progress = 0;
   log = "";
 
@@ -34,6 +35,8 @@ export class FFmpegProcessComponent {
       return;
     }
 
-    this.ffmpegService.run();
+    this.ffmpegService.run().then(() => {
+      this.output = URL.createObjectURL(this.ffmpegService.output());
+    });
   }
 }
