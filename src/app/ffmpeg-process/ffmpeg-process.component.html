@@ -1,1 +1,8 @@
-<textarea rows="50" cols="40" readonly></textarea>
+<div *ngIf="ready; else notReady">
+  <h3>{{ progress }}%</h3>
+  <code><pre>{{ log }}</pre></code>
+</div>
+<ng-template #notReady>
+  <h1> Error: FFmpeg is Not Loaded </h1>
+</ng-template>
+
