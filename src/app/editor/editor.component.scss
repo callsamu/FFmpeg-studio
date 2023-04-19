@@ -1,1 +1,30 @@
 .hide { display: none; }
+
+.editor {
+  resize: none;
+  height: 87.5%;
+  width: 100%;
+
+  color: white;
+  background-color: #121212;
+
+  border: none;
+  padding: 0.5rem;
+  display: block;
+  margin: 0;
+}
+
+.editor:focus {
+  border: none;
+}
+
+.icon {
+  margin: 0;
+}
+
+.button {
+  padding: 0.25rem 1rem;
+  border: none;
+  color: white;
+  background-color: rgba($color: #000000, $alpha: 0.0)
+}

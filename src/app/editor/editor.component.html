@@ -1,7 +1,6 @@
 <textarea
-  [(ngModel)]="command"
-  rows=10
-  cols=50>
+  class="editor"
+  [(ngModel)]="command">
   {{ command }}
 </textarea>
 
@@ -10,6 +9,12 @@
   class="hide"
   type="file"
   (change)="onFileSelected($event)">
-<button (click)="fileUpload.click()">Add</button>
 
-<button (click)="run()">Run</button>
+<button class="button" (click)="fileUpload.click()">
+  <mat-icon class="icon">add</mat-icon>
+  <p>Add</p>
+</button>
+<button class="button" (click)="run()">
+  <mat-icon class="icon">forward</mat-icon>
+  <p>Run</p>
+</button>
