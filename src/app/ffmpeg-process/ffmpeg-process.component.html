@@ -1,14 +1,25 @@
-<div *ngIf="ready; else notReady">
-  <mat-progress-bar
-    mode="determinate"
-    [value]="progress"></mat-progress-bar>
+<mat-progress-bar
+  mode="determinate"
+  [value]="progress"></mat-progress-bar>
+
+<ng-template class="container" #notReady>
+  <h1> Error: FFmpeg is Not Loaded </h1>
+</ng-template>
+
+<div class="container" *ngIf="ready; else notReady">
   <textarea readonly
             #logger
             id="logger">{{ log }}</textarea>
-  <a *ngIf="output" href="{{ output }}">Download</a>
+
+  <div class="buttons">
+    <a *ngIf="output" href="{{ output }}">
+      <button class="button">
+        <mat-icon>download</mat-icon>
+        <p>Download</p>
+      </button>
+    </a>
+  </div>
 </div>
 
-<ng-template #notReady>
-  <h1> Error: FFmpeg is Not Loaded </h1>
-</ng-template>
+
 

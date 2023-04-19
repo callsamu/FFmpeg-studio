@@ -9,17 +9,15 @@
   background-color: #121212;
 
   border: none;
+  outline: none;
   padding: 0.5rem;
   display: block;
   margin: 0;
 }
 
-.editor:focus {
-  border: none;
-}
-
-.icon {
-  margin: 0;
+.buttons {
+  text-align: center;
+  width: 100%;
 }
 
 .button {

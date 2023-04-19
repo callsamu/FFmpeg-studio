@@ -10,11 +10,13 @@
   type="file"
   (change)="onFileSelected($event)">
 
-<button class="button" (click)="fileUpload.click()">
-  <mat-icon class="icon">add</mat-icon>
-  <p>Add</p>
-</button>
-<button class="button" (click)="run()">
-  <mat-icon class="icon">forward</mat-icon>
-  <p>Run</p>
-</button>
+<div class="buttons">
+  <button class="button" (click)="fileUpload.click()">
+    <mat-icon class="icon">add</mat-icon>
+    <p>Add</p>
+  </button>
+  <button class="button" (click)="run()">
+    <mat-icon class="icon">forward</mat-icon>
+    <p>Run</p>
+  </button>
+</div>
