@@ -14,7 +14,6 @@ export class EditorComponent {
 
   constructor(
     private argsService: ArgsService,
-    private ffmpegService: FFmpegService,
     private router: Router,
   ) {}
 
@@ -32,14 +31,11 @@ export class EditorComponent {
     for (let i = 0; i < fileList.length; i ++) {
       const file = fileList[i];
 
-      console.log(this.cursorStart);
       const before = this.command.slice(0, this.cursorStart);
-      console.log(before);
       const after = this.command.slice(this.cursorStart);
-      console.log(after);
       this.command = before + `"${file.name}"` + after;
 
-      this.ffmpegService.writeFile(file);
+      this.argsService.addFile(file);
     }
   }
 }

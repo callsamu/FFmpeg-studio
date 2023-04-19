@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ArgsService {
   args: string[] = [];
+  files = new Set<File>;
 
   constructor() { }
 
@@ -20,6 +21,10 @@ export class ArgsService {
     if (args && args[0] === "ffmpeg") args.shift();
     this.args = args;
     console.log(this.args);
+  }
+
+  addFile(file: File) {
+    this.files.add(file);
   }
 
   output(): string | undefined {
