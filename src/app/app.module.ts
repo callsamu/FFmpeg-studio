@@ -12,12 +12,14 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CodeEditorComponent } from './code-editor/code-editor.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorComponent,
-    FFmpegProcessComponent
+    FFmpegProcessComponent,
+    CodeEditorComponent
   ],
   imports: [
     BrowserModule,
