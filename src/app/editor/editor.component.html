@@ -8,7 +8,11 @@ old editor
 </textarea>
 -->
 
-<app-code-editor></app-code-editor>
+<app-code-editor
+  [code]="command"
+  (codeChange)="command=$event.code;
+                cursorStart=$event.cursor.start">
+</app-code-editor>
 
 <input
   #fileUpload

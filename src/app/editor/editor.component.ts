@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class EditorComponent {
   command = "ffmpeg";
+  cursorStart: number = 0;
 
   constructor(
     private argsService: ArgsService,
@@ -30,7 +31,14 @@ export class EditorComponent {
 
     for (let i = 0; i < fileList.length; i ++) {
       const file = fileList[i];
-      this.command += file.name;
+
+      console.log(this.cursorStart);
+      const before = this.command.slice(0, this.cursorStart);
+      console.log(before);
+      const after = this.command.slice(this.cursorStart);
+      console.log(after);
+      this.command = before + `"${file.name}"` + after;
+
       this.ffmpegService.writeFile(file);
     }
   }
