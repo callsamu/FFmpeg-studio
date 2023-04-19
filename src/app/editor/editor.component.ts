@@ -14,6 +14,7 @@ export class EditorComponent {
 
   constructor(
     private argsService: ArgsService,
+    private ffmpegService: FFmpegService,
     private router: Router,
   ) {}
 
