@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { FFmpegService } from '../ffmpeg.service';
 
 @Component({
@@ -16,6 +16,7 @@ export class FFmpegProcessComponent {
 
   constructor(
     private ffmpegService: FFmpegService,
+    private changeDetector: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -23,11 +24,13 @@ export class FFmpegProcessComponent {
       .subscribe(x => this.progress = x);
     this.ffmpegService.logs()
       .subscribe(log => {
-        this.log += log.message + '\n'
-
         if (!this.logger) return;
+
+        this.log += log.message + '\n';
+        this.changeDetector.detectChanges();
+
         const logger = this.logger.nativeElement;
-        logger.scrollTo(0, logger.scrollHeight)
+        logger.scrollTop = logger.scrollHeight;
       });
 
     if (!this.ffmpegService.ready) {
