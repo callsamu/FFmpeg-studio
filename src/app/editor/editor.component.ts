@@ -33,7 +33,7 @@ export class EditorComponent {
 
       const before = this.command.slice(0, this.cursorStart);
       const after = this.command.slice(this.cursorStart);
-      this.command = before + `"${file.name}"` + after;
+      this.command = before + file.name + after;
 
       this.argsService.addFile(file);
     }

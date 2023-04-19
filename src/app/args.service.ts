@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ArgsService {
   args: string[] = [];
-  files = new Set<File>;
+  files = new Map<string, File>();
 
   constructor() { }
 
@@ -24,7 +24,11 @@ export class ArgsService {
   }
 
   addFile(file: File) {
-    this.files.add(file);
+    this.files.set(file.name, file);
+  }
+
+  getFiles(): Map<string, File> {
+    return this.files;
   }
 
   output(): string | undefined {

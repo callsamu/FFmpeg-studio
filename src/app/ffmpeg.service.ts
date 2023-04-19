@@ -20,8 +20,17 @@ export class FFmpegService {
     this.ffmpeg.load().then(() => this.ready = true);
   }
 
-  run(): Promise<void> {
+  async run(): Promise<void> {
     const args = this.argsService.getArgs();
+    const files = this.argsService.getFiles();
+
+    for (const [name, file] of files) {
+      const ab = await file.arrayBuffer();
+      const array = new Uint8Array(ab);
+      this.ffmpeg.FS("writeFile", name, array);
+      console.log(name);
+    }
+
     return this.ffmpeg.run(...args);
   }
 
