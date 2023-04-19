@@ -31,9 +31,15 @@ export class CodeEditorComponent implements OnChanges, AfterViewInit {
       e.innerHTML = highlight.value;
     }
 
+    const OPTIONS = {
+      tab: "  ",
+      spellCheck: true,
+    }
+
     this.editor = CodeJar(
       this.element.nativeElement,
       highlight,
+      OPTIONS,
     );
 
     this.editor.onUpdate(code => {

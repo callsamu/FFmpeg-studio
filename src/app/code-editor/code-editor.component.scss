@@ -1,8 +1,10 @@
 .editor {
   margin: 0;
   padding: 0.5rem;
-  height: 87.5%;
-  width: 100%;
+  height: 85%;
+
+  width: 99%;
   font-family: monospace;
-  overflow-x: scroll;
+  white-space: nowrap;
+
 }
