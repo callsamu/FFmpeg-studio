@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { FFmpegService } from '../ffmpeg.service';
 import { ArgsService } from '../args.service';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { Change, ChangeType } from '../editor-change';
 
 @Component({
   selector: 'app-editor',
@@ -11,6 +12,8 @@ import { Router } from '@angular/router';
 export class EditorComponent {
   command = "ffmpeg";
   cursorStart: number = 0;
+
+  changes = new Subject<Change>();
 
   constructor(
     private argsService: ArgsService,
@@ -31,9 +34,10 @@ export class EditorComponent {
     for (let i = 0; i < fileList.length; i ++) {
       const file = fileList[i];
 
-      const before = this.command.slice(0, this.cursorStart);
-      const after = this.command.slice(this.cursorStart);
-      this.command = before + file.name + after;
+      this.changes.next({
+        value: file.name,
+        type: ChangeType.insertion,
+      });
 
       this.argsService.addFile(file);
     }

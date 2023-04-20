@@ -1,6 +1,4 @@
-<app-code-editor
-    [code]="command">
-</app-code-editor>
+<app-code-editor [changes]="changes.asObservable()"></app-code-editor>
 
 <input
   #fileUpload
