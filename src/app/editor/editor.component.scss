@@ -1,21 +1,7 @@
 .hide { display: none; }
 
-.editor {
-  resize: none;
-  height: 87.5%;
-  width: 100%;
-
-  color: white;
-  background-color: #121212;
-
-  border: none;
-  outline: none;
-  padding: 0.5rem;
-  display: block;
-  margin: 0;
-}
-
 .buttons {
+  box-shadow: 109px 5px 5px black;
   text-align: center;
   width: 100%;
 }
