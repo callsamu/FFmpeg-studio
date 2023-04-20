@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { javascript } from '@codemirror/lang-javascript';
-import { basicSetup, EditorView } from 'codemirror';
 import { oneDark } from './code-editor.theme';
+import { basicSetup, EditorView } from 'codemirror';
+import { ffmpeg } from 'src/language-ffmpeg/language';
 
 @Component({
   selector: 'app-code-editor',
@@ -15,12 +15,16 @@ export class CodeEditorComponent implements AfterViewInit {
 
   editor?: EditorView;
 
-
   ngAfterViewInit(): void {
+    this.initEditor();
+  }
+
+  initEditor(): void {
     if (!this.element) return;
 
+
     this.editor = new EditorView({
-      extensions: [basicSetup, javascript(), oneDark],
+      extensions: [basicSetup, oneDark, ffmpeg()],
       parent: this.element.nativeElement,
     });
   }
