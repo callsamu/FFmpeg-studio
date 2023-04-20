@@ -1,68 +1,64 @@
-import { OnChanges, AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild, SimpleChanges } from '@angular/core';
-import hljs from 'highlight.js';
-import { CodeJar, Position } from 'codejar';
-import { FFmpegSyntax } from '../syntax';
-
-type UpdateEvent = {
-  code: string;
-  cursor: Position;
-}
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { oneDark } from './code-editor.theme';
+import { EditorView, minimalSetup } from 'codemirror';
+import { autocompletion } from '@codemirror/autocomplete';
+import { lineNumbers } from '@codemirror/view';
+import { ffmpeg } from 'src/language-ffmpeg/language';
+import { Observable } from 'rxjs';
+import { EditorEvent } from '../editor-event';
 
 @Component({
   selector: 'app-code-editor',
   templateUrl: './code-editor.component.html',
   styleUrls: ['./code-editor.component.scss']
 })
-export class CodeEditorComponent implements OnChanges, AfterViewInit {
+export class CodeEditorComponent implements AfterViewInit {
   @ViewChild('editor') element?: ElementRef;
-  editor?: CodeJar;
 
-  @Input() code = "";
-  @Output() codeChange = new EventEmitter<UpdateEvent>;
+  @Input() events?: Observable<EditorEvent>;
+  editor?: EditorView;
 
-  ngAfterViewInit(): void {
-    if (!this.element) return;
+  @Output() code = new EventEmitter<string>;
 
-    hljs.registerLanguage('ffmpeg', FFmpegSyntax);
-
-    const highlight = (e: HTMLElement) => {
-      const code = e.textContent ?? "";
-      const highlight = hljs.highlight(code, { language: 'ffmpeg' });
-      e.innerHTML = highlight.value;
-    }
-
-    const OPTIONS = {
-      tab: "  ",
-      spellCheck: true,
-    }
-
-    this.editor = CodeJar(
-      this.element.nativeElement,
-      highlight,
-      OPTIONS,
-    );
-
-    this.editor.onUpdate(code => {
-      if (!this.editor) return;
-      this.codeChange.emit({
-        code: code,
-        cursor: this.editor.save()
-      });
-    });
+  ngOnInit(): void {
+    if (!this.events) return;
+    this.events.subscribe(change => this.handleEvent(change));
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngAfterViewInit(): void {
+    this.initEditor();
+  }
+
+  initEditor(): void {
+    if (!this.element) return;
+
+    this.editor = new EditorView({
+      parent: this.element.nativeElement,
+      extensions: [
+        lineNumbers(),
+        minimalSetup,
+        autocompletion(),
+        oneDark,
+        ffmpeg(),
+      ],
+    });
+
+    this.editor.dispatch({
+      changes: {from: 0, insert: "ffmpeg"}
+    })
+
+  }
+
+  handleEvent(event: EditorEvent): void {
     if (!this.editor) return;
 
-    const newCode = changes["code"].currentValue as string;
-    const charDifference = newCode.length - this.editor.toString().length;
+    const selections = this.editor.state.selection;
+    const [range] = selections.asSingle().ranges;
 
-    const pos = this.editor.save();
-    this.editor.updateCode(newCode);
+    this.editor.dispatch({
+      changes: { from: range.from, insert: event.value ?? "" }
+    });
 
-    pos.start += charDifference;
-    pos.end += charDifference;
-
-    this.editor.restore(pos);
+    this.code.emit(this.editor.state.doc.toString());
   }
 }

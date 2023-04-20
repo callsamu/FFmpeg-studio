@@ -1,17 +1,7 @@
-<!--
-old editor
-
-<textarea
-  class="editor"
-  [(ngModel)]="command">
-  {{ command }}
-</textarea>
--->
-
 <app-code-editor
-  [code]="command"
-  (codeChange)="command=$event.code;
-                cursorStart=$event.cursor.start">
+  [events]="eventsToEditor.asObservable()"
+  (code)="command = $event">
+
 </app-code-editor>
 
 <input
