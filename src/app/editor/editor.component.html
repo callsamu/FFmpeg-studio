@@ -1,4 +1,8 @@
-<app-code-editor [changes]="changes.asObservable()"></app-code-editor>
+<app-code-editor
+  [events]="eventsToEditor.asObservable()"
+  (code)="command = $event">
+
+</app-code-editor>
 
 <input
   #fileUpload

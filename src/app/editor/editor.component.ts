@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ArgsService } from '../args.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { Change, ChangeType } from '../editor-change';
+import { EditorEvent, EditorEventType } from '../editor-event';
 
 @Component({
   selector: 'app-editor',
@@ -13,7 +13,7 @@ export class EditorComponent {
   command = "ffmpeg";
   cursorStart: number = 0;
 
-  changes = new Subject<Change>();
+  eventsToEditor = new Subject<EditorEvent>();
 
   constructor(
     private argsService: ArgsService,
@@ -21,6 +21,13 @@ export class EditorComponent {
   ) {}
 
   run(): void {
+    this.eventsToEditor.next({
+      type: EditorEventType.retrieval
+    });
+
+    console.log(this.command);
+    const command = this.command;
+    setTimeout(() => console.log(command), 3000);
     this.argsService.setArgs(this.command);
     this.router.navigateByUrl("run");
   }
@@ -34,9 +41,9 @@ export class EditorComponent {
     for (let i = 0; i < fileList.length; i ++) {
       const file = fileList[i];
 
-      this.changes.next({
+      this.eventsToEditor.next({
         value: file.name,
-        type: ChangeType.insertion,
+        type: EditorEventType.insertion,
       });
 
       this.argsService.addFile(file);

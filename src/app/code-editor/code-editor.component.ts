@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { oneDark } from './code-editor.theme';
 import { EditorView, minimalSetup } from 'codemirror';
 import { autocompletion } from '@codemirror/autocomplete';
 import { lineNumbers } from '@codemirror/view';
 import { ffmpeg } from 'src/language-ffmpeg/language';
 import { Observable } from 'rxjs';
-import { Change } from '../editor-change';
+import { EditorEvent } from '../editor-event';
 
 @Component({
   selector: 'app-code-editor',
@@ -15,12 +15,14 @@ import { Change } from '../editor-change';
 export class CodeEditorComponent implements AfterViewInit {
   @ViewChild('editor') element?: ElementRef;
 
-  @Input() changes?: Observable<Change>;
+  @Input() events?: Observable<EditorEvent>;
   editor?: EditorView;
 
+  @Output() code = new EventEmitter<string>;
+
   ngOnInit(): void {
-    if (!this.changes) return;
-    this.changes.subscribe(change => this.handleExternalChange(change));
+    if (!this.events) return;
+    this.events.subscribe(change => this.handleEvent(change));
   }
 
   ngAfterViewInit(): void {
@@ -47,14 +49,16 @@ export class CodeEditorComponent implements AfterViewInit {
 
   }
 
-  handleExternalChange(change: Change): void {
+  handleEvent(event: EditorEvent): void {
     if (!this.editor) return;
 
     const selections = this.editor.state.selection;
     const [range] = selections.asSingle().ranges;
 
     this.editor.dispatch({
-      changes: { from: range.from, insert: change.value }
+      changes: { from: range.from, insert: event.value ?? "" }
     });
+
+    this.code.emit(this.editor.state.doc.toString());
   }
 }
