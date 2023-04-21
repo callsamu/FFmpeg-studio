@@ -2,6 +2,7 @@ export enum EditorEventType {
   replacement,
   insertion,
   retrieval,
+  undo,
 };
 
 export interface EditorEvent {
