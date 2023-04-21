@@ -13,7 +13,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
+import { MessageComponent } from './message/message.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
@@ -21,7 +23,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AppComponent,
     EditorComponent,
     FFmpegProcessComponent,
-    CodeEditorComponent
+    CodeEditorComponent,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatIconModule,
     MatButtonModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
