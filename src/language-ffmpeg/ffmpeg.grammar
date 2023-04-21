@@ -12,7 +12,7 @@ Parameter { Argument | String }
 
   Flag { "-" "-"? $[a-zA-Z:_]+ }
 
-  Argument { ![-"\t\n\r ]![\\/:*?"<>| \t\n\r]* }
+  Argument { ![-"\t\n\r ]![\\/*?"<>| \t\n\r]* }
 
   String { '"' (!["\\] | "\\" _)* '"' }
 
