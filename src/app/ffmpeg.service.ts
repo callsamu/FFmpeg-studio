@@ -15,16 +15,27 @@ export class FFmpegService {
   ffmpeg: FFmpeg;
   ready = false;
   running = false;
+  log = "";
 
   constructor(private argsService: ArgsService) {
     this.ffmpeg = createFFmpeg({ log: true });
-    this.ffmpeg.load().then(() => this.ready = true);
+    this.load();
+  }
+
+  load(): void {
+    this.clearLog();
+
+    this.ffmpeg.load().then(() => {
+      this.clearLog();
+      this.ready = true
+    });
+  }
+
+  clearLog(): void {
+    this.log = "";
   }
 
   async run(): Promise<void> {
-    if (this.running) return;
-    this.running = false;
-
     const args = this.argsService.getArgs();
     const files = this.argsService.getFiles();
 
@@ -35,9 +46,14 @@ export class FFmpegService {
       console.log(name);
     }
 
-    console.log(args, files);
+    if (!this.ready) {
+      this.log += "ERROR: ffmpeg is not loaded";
+      throw new Error("ffmpeg is not loaded");
+    }
 
-    return this.ffmpeg.run(...args);
+    this.running = true;
+    await this.ffmpeg.run(...args);
+    this.running = false;
   }
 
   progress(): Observable<number> {
@@ -48,11 +64,14 @@ export class FFmpegService {
     });
   }
 
-  logs(): Observable<Log> {
+  whenItLogs(): Observable<void> {
     const ffmpeg = this.ffmpeg;
 
-    return new Observable((observer: Observer<Log>) => {
-      ffmpeg.setLogger(log => observer.next(log));
+    return new Observable((observer: Observer<void>) => {
+      ffmpeg.setLogger(log => {
+        this.log += log.message + '\n';
+        observer.next();
+      });
     });
   }
 
@@ -79,8 +98,11 @@ export class FFmpegService {
     );
   }
 
-  async cancel(): Promise<void> {
+  cancel(): void {
     this.running = false;
-    return this.ffmpeg.exit();
+    this.ready = false;
+
+    this.log += "\n\n\nExiting...";
+    this.ffmpeg.exit();
   }
 }

@@ -2,22 +2,28 @@
   mode="determinate"
   [value]="progress"></mat-progress-bar>
 
-<ng-template class="container" #notReady>
-  <h1> Error: FFmpeg is Not Loaded </h1>
-</ng-template>
-
-<div class="container" *ngIf="ready; else notReady">
+<div class="container">
   <textarea readonly
             #logger
-            id="logger">{{ log }}</textarea>
+            id="logger">{{ ffmpegService.log }}</textarea>
 
   <div class="buttons">
+    <button *ngIf="ffmpegService.running && ffmpegService.ready"
+            (click)="cancel()" class="button">
+      <mat-icon>cancel</mat-icon>
+      <p>Cancel</p>
+    </button>
     <a *ngIf="output" href="{{ output }}">
       <button class="button">
         <mat-icon>download</mat-icon>
         <p>Download</p>
       </button>
     </a>
+    <button *ngIf="!ffmpegService.running || !ffmpegService.ready"
+            (click)="goBack()" class="button">
+      <mat-icon>arrow_back</mat-icon>
+      <p>Go Back</p>
+    </button>
   </div>
 </div>
 

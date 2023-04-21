@@ -1,24 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ArgsService } from '../args.service';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { EditorEvent, EditorEventType } from '../editor-event';
+import { FFmpegService } from '../ffmpeg.service';
 
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
   styleUrls: ['./editor.component.scss']
 })
-export class EditorComponent {
+export class EditorComponent implements OnInit {
   command = "ffmpeg";
   cursorStart: number = 0;
 
   eventsToEditor = new Subject<EditorEvent>();
 
   constructor(
+    private ffmpegService: FFmpegService,
     private argsService: ArgsService,
     private router: Router,
   ) {}
+
+  ngOnInit() {
+    if (!this.ffmpegService.ready) {
+      this.ffmpegService.load();
+    }
+  }
 
   run(): void {
     this.eventsToEditor.next({
