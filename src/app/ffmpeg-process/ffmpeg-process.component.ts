@@ -11,7 +11,6 @@ export class FFmpegProcessComponent implements OnInit {
   ready = true;
   output?: string;
   progress = 0;
-  log = "";
 
   @ViewChild('logger') logger?: ElementRef;
 
@@ -30,8 +29,6 @@ export class FFmpegProcessComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.log = "";
-
     this.ffmpegService.progress()
       .subscribe(x => this.progress = x);
     this.ffmpegService.whenItLogs()
