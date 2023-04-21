@@ -1,16 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { Message } from './message';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MessageService {
-  message?: string;
-  type?: string;
+  messages = new Subject<Message>;
 
   constructor() { }
 
+  subscribe(fn: (message: Message) => void): void {
+    this.messages.subscribe(fn);
+  }
+
   setMessage(message: string, type?: string) {
-    this.message = message;
-    this.type = type;
+    this.messages.next({
+      content: message,
+      type: type ?? "info",
+    });
   }
 }
