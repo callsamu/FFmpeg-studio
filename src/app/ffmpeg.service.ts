@@ -14,6 +14,7 @@ export type Log = {
 export class FFmpegService {
   ffmpeg: FFmpeg;
   ready = false;
+  running = false;
 
   constructor(private argsService: ArgsService) {
     this.ffmpeg = createFFmpeg({ log: true });
@@ -21,6 +22,9 @@ export class FFmpegService {
   }
 
   async run(): Promise<void> {
+    if (this.running) return;
+    this.running = false;
+
     const args = this.argsService.getArgs();
     const files = this.argsService.getFiles();
 
@@ -30,6 +34,8 @@ export class FFmpegService {
       this.ffmpeg.FS("writeFile", name, array);
       console.log(name);
     }
+
+    console.log(args, files);
 
     return this.ffmpeg.run(...args);
   }
@@ -71,5 +77,10 @@ export class FFmpegService {
     return URL.createObjectURL(
       new Blob([array], {type: `video/${extension}`})
     );
+  }
+
+  async cancel(): Promise<void> {
+    this.running = false;
+    return this.ffmpeg.exit();
   }
 }
