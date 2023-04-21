@@ -14,6 +14,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDividerModule } from '@angular/material/divider';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { MessageComponent } from './message/message.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -38,6 +39,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     MatButtonModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatDividerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

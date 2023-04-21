@@ -4,8 +4,13 @@
 </mat-toolbar>
 <mat-sidenav-container class="main">
   <mat-sidenav #sidenav class="sidenav">
-    <p><a routerLink="new">New Command</a></p>
-    <p><a routerLink="new">Commands</a></p>
+    <div class="menu-item">
+      <a routerLink="new"> New Command </a>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="menu-item">
+      <span class="menu-item"> Commands </span>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content class="content">
     <router-outlet></router-outlet>

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FFmpegService } from './ffmpeg.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,5 @@ import { FFmpegService } from './ffmpeg.service';
 export class AppComponent {
   title = 'ffmpeg-studio';
 
-  constructor(
-    private ffmpeg: FFmpegService,
-  ) {}
+  constructor() {}
 }
