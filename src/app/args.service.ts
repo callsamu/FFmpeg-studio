@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MessageService } from './message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +8,9 @@ export class ArgsService {
   args: string[] = [];
   files = new Map<string, File>();
 
-  constructor() { }
+  constructor(
+    private messageService: MessageService,
+  ) {}
 
   getArgs(): string[] {
     return this.args;
@@ -25,6 +28,7 @@ export class ArgsService {
 
   addFile(file: File) {
     this.files.set(file.name, file);
+    this.messageService.setMessage(`Successfully uploaded: ${file.name}`);
   }
 
   getFiles(): Map<string, File> {
