@@ -1,5 +1,5 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { animate, AnimationBuilder, AnimationPlayer, style } from '@angular/animations';
+import { AfterViewInit, Component, ElementRef, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { Message, MessageType } from '../message';
 import { MessageService } from '../message.service';
 
@@ -7,35 +7,39 @@ import { MessageService } from '../message.service';
   selector: 'app-message',
   templateUrl: './message.component.html',
   styleUrls: ['./message.component.scss'],
-  animations: [
-    trigger('write', [
-      state('hidden', style({
-        width: "0%",
-      })),
-      state('written', style({
-        width: "100%",
-      })),
-      transition('hidden => written', [
-        animate('5s')
-      ]),
-    ])
-  ]
 })
 
-export class MessageComponent implements OnInit {
+export class MessageComponent implements OnInit, AfterViewInit {
   message?: Message;
-  changed = false;
   types = MessageType;
+
+  @ViewChild('span') span?: ElementRef;
+  writeAnimation?: AnimationPlayer;
 
   constructor(
     private messageService: MessageService,
+    private animationBuilder: AnimationBuilder,
   ) {}
 
   ngOnInit(): void {
     this.messageService.observable().subscribe(message => {
-      this.changed = false;
       this.message = message;
-      this.changed = true;
+
+      if (!this.writeAnimation) return;
+      this.writeAnimation.play();
     })
+  }
+
+  ngAfterViewInit(): void {
+    console.log(this.span);
+    if (!this.span) return;
+
+    console.log("animating");
+    const animation = this.animationBuilder.build([
+      style({ width: "0" }),
+      animate('2s', style({ width: '100%'}))
+    ])
+
+    this.writeAnimation = animation.create(this.span.nativeElement);
   }
 }

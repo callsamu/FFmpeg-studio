@@ -1,5 +1,5 @@
-<div *ngIf="message" class="message-container">
-  <div *ngSwitch="message.type">
+<div class="message-container">
+  <div class="switch" [ngSwitch]="message?.type">
     <mat-progress-spinner
       *ngSwitchCase="types.Load"
       class="spinner"
@@ -8,12 +8,12 @@
     </mat-progress-spinner>
     <mat-icon
       *ngSwitchCase="types.Info"
-      class="arrow leftmost "
-      arrow_forward_ios>
+      class="arrow leftmost ">
+      arrow_forward_ios
     </mat-icon>
-    wqeqweqwe
   </div>
   <span
-    [@write]="changed ? 'written' : 'hidden'"
-    class="right typewriting">{{ message.content }}</span>
+    #span
+    id="span"
+    class="right typewriting">{{ message?.content }}</span>
 </div>

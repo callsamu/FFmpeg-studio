@@ -8,6 +8,12 @@
   padding: 0.3rem 0.2rem;
 }
 
+.switch {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
 .arrow {
   transform: scale(0.5);
   margin-left: 1rem;

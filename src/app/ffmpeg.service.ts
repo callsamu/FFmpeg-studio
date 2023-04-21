@@ -29,7 +29,6 @@ export class FFmpegService {
     });
 
     this.ffmpeg = createFFmpeg({ log: true });
-    this.load();
   }
 
   load(): void {
