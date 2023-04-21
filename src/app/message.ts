@@ -1,4 +1,9 @@
+export enum MessageType {
+  Load,
+  Info,
+}
+
 export interface Message {
   content: string;
-  type: string;
+  type: MessageType;
 }

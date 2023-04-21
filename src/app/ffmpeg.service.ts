@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { createFFmpeg, FFmpeg } from '@ffmpeg/ffmpeg';
 import { Observable, Observer, } from 'rxjs';
 import { ArgsService } from './args.service';
+import { MessageType } from './message';
 import { MessageService } from './message.service';
 
 export type Log = {
@@ -22,7 +23,11 @@ export class FFmpegService {
     private argsService: ArgsService,
     private messageService: MessageService,
   ) {
-    this.messageService.setMessage("Loading FFmpeg...", "load");
+    this.messageService.setMessage({
+      content: "Loading FFmpeg...",
+      type: MessageType.Load,
+    });
+
     this.ffmpeg = createFFmpeg({ log: true });
     this.load();
   }
@@ -31,7 +36,10 @@ export class FFmpegService {
     this.clearLog();
 
     this.ffmpeg.load().then(() => {
-      this.messageService.setMessage("FFmpeg is ready!");
+      this.messageService.setMessage({
+        content: "FFmpeg is ready!",
+        type: MessageType.Info,
+      });
       this.clearLog();
       this.ready = true
     });

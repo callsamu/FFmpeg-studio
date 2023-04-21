@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Message } from './message';
 
 @Injectable({
@@ -10,14 +10,11 @@ export class MessageService {
 
   constructor() { }
 
-  subscribe(fn: (message: Message) => void): void {
-    this.messages.subscribe(fn);
+  observable(): Observable<Message> {
+    return this.messages.asObservable();
   }
 
-  setMessage(message: string, type?: string) {
-    this.messages.next({
-      content: message,
-      type: type ?? "info",
-    });
+  setMessage(message: Message) {
+    this.messages.next(message);
   }
 }

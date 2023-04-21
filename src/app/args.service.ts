@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MessageType } from './message';
 import { MessageService } from './message.service';
 
 @Injectable({
@@ -28,7 +29,10 @@ export class ArgsService {
 
   addFile(file: File) {
     this.files.set(file.name, file);
-    this.messageService.setMessage(`Successfully uploaded: ${file.name}`);
+    this.messageService.setMessage({
+      content: `Successfully uploaded: ${file.name}`,
+      type: MessageType.Info,
+    });
   }
 
   getFiles(): Map<string, File> {
