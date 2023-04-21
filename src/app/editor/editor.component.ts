@@ -40,6 +40,12 @@ export class EditorComponent implements OnInit {
     this.router.navigateByUrl("run");
   }
 
+  undo(): void {
+    this.eventsToEditor.next({
+      type: EditorEventType.undo
+    })
+  }
+
   onFileSelected(event: Event): void {
     const input = event.currentTarget as HTMLInputElement;
     let fileList = input.files;
