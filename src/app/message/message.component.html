@@ -1,6 +1,19 @@
-<div class="message-container">
-  <div class="spinner" *ngIf="messageService.type === 'load'">
-    <mat-progress-spinner class="leftmost" diameter="20" mode="indeterminate"></mat-progress-spinner>
+<div *ngIf="message" class="message-container">
+  <div *ngSwitch="message.type">
+    <mat-progress-spinner
+      *ngSwitchCase="types.Load"
+      class="spinner"
+      diameter="20"
+      mode="indeterminate">
+    </mat-progress-spinner>
+    <mat-icon
+      *ngSwitchCase="types.Info"
+      class="arrow leftmost "
+      arrow_forward_ios>
+    </mat-icon>
+    wqeqweqwe
   </div>
-  <span class="leftmost">{{ messageService.message }}</span>
+  <span
+    [@write]="changed ? 'written' : 'hidden'"
+    class="right typewriting">{{ message.content }}</span>
 </div>

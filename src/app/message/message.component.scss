@@ -1,5 +1,6 @@
 .message-container {
   display: flex;
+  align-items: center;
   background-color: #1A1A1A;
   font-family: monospace;
   font-size: 0.75rem;
@@ -7,7 +8,23 @@
   padding: 0.3rem 0.2rem;
 }
 
-.leftmost {
+.arrow {
+  transform: scale(0.5);
+  margin-left: 1rem;
+}
+
+.typewriting {
+  overflow: hidden; /* Ensures the content is not revealed until the animation */
+  white-space: nowrap; /* Keeps the content on a single line */
+  letter-spacing: .10em; /* Adjust as needed */
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+.spinner {
   margin-left: 1rem;
   margin-right: 0.5rem;
 }
