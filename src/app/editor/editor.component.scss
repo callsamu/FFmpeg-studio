@@ -1,14 +1,19 @@
-.hide { display: none; }
+.hide {
+  display: none;
+  margin: 0;
+}
 
 .buttons {
-  box-shadow: 109px 5px 5px black;
   text-align: center;
   justify-content: center;
   width: 100%;
+  height: auto;
+  z-index: 1;
+  border-top: 2px solid #212121;
 }
 
 .button {
-  padding: 0.25rem 1rem;
+  margin: 1rem;
   border: none;
   color: white;
   background-color: rgba($color: #000000, $alpha: 0.0)
