@@ -1,1 +1,6 @@
-<p>message works!</p>
+<div class="message-container">
+  <div class="spinner" *ngIf="messageService.type === 'load'">
+    <mat-progress-spinner class="leftmost" diameter="20" mode="indeterminate"></mat-progress-spinner>
+  </div>
+  <span class="leftmost">{{ messageService.message }}</span>
+</div>

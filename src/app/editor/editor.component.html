@@ -1,14 +1,10 @@
+<app-message></app-message>
+
 <app-code-editor
   [events]="eventsToEditor.asObservable()"
   (code)="command = $event">
 
 </app-code-editor>
-
-<input
-  #fileUpload
-  class="hide"
-  type="file"
-  (change)="onFileSelected($event)">
 
 <div class="buttons">
   <button class="button" (click)="fileUpload.click()">
@@ -20,3 +16,11 @@
     <p>Run</p>
   </button>
 </div>
+
+<input
+  #fileUpload
+  class="hide"
+  type="file"
+  (change)="onFileSelected($event)">
+
+
