@@ -2,6 +2,7 @@
 
 <app-code-editor
   [events]="eventsToEditor.asObservable()"
+  [commandName]="commandName()"
   (code)="command = $event">
 
 </app-code-editor>

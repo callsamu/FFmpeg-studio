@@ -1,36 +1,37 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
-import { oneDark } from './code-editor.theme';
-import { EditorView, minimalSetup } from 'codemirror';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { EditorView, } from 'codemirror';
 import { undo } from '@codemirror/commands';
-import { autocompletion } from '@codemirror/autocomplete';
-import { lineNumbers } from '@codemirror/view';
-import { lintGutter } from '@codemirror/lint';
-import { ffmpeg } from 'src/language-ffmpeg/language';
-import { Observable } from 'rxjs';
 import { EditorEvent, EditorEventType } from '../editor-event';
-import { ArgsService } from '../args.service';
-import { newLinter } from 'src/language-ffmpeg/linter';
+import { Observable } from 'rxjs';
+import { EditorStatesService } from '../editor-states.service';
 
 @Component({
   selector: 'app-code-editor',
   templateUrl: './code-editor.component.html',
   styleUrls: ['./code-editor.component.scss']
 })
-export class CodeEditorComponent implements AfterViewInit {
+export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('editor') element?: ElementRef;
 
   @Input() events?: Observable<EditorEvent>;
-  editor?: EditorView;
+  @Input() commandName = "";
 
   @Output() code = new EventEmitter<string>;
 
+  editor?: EditorView;
+
   constructor(
-    private argsService: ArgsService,
+    private stateService: EditorStatesService,
   ) {}
 
   ngOnInit(): void {
     if (!this.events) return;
     this.events.subscribe(change => this.handleEvent(change));
+  }
+
+  ngOnDestroy(): void {
+    if (!this.editor) return;
+    this.stateService.save(this.commandName, this.editor.state)
   }
 
   ngAfterViewInit(): void {
@@ -40,26 +41,10 @@ export class CodeEditorComponent implements AfterViewInit {
   initEditor(): void {
     if (!this.element) return;
 
-    const files = this.argsService.files;
-    const linter = newLinter(file => files.has(file));
-
     this.editor = new EditorView({
       parent: this.element.nativeElement,
-      extensions: [
-        lintGutter(),
-        linter,
-        lineNumbers(),
-        minimalSetup,
-        autocompletion(),
-        oneDark,
-        ffmpeg(),
-      ],
+      state: this.stateService.fetch(this.commandName),
     });
-
-    this.editor.dispatch({
-      changes: {from: 0, insert: "ffmpeg"}
-    })
-
   }
 
   handleEvent(event: EditorEvent): void {

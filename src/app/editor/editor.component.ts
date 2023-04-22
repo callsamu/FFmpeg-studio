@@ -46,6 +46,11 @@ export class EditorComponent implements OnInit {
     })
   }
 
+  commandName(): string {
+    const url = this.router.url;
+    return "";
+  }
+
   onFileSelected(event: Event): void {
     const input = event.currentTarget as HTMLInputElement;
     let fileList = input.files;
