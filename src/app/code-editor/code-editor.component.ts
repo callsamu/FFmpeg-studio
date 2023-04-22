@@ -40,7 +40,8 @@ export class CodeEditorComponent implements AfterViewInit {
   initEditor(): void {
     if (!this.element) return;
 
-    const linter = newLinter(this.argsService.fileIsUploaded);
+    const files = this.argsService.files;
+    const linter = newLinter(file => files.has(file));
 
     this.editor = new EditorView({
       parent: this.element.nativeElement,
@@ -78,7 +79,7 @@ export class CodeEditorComponent implements AfterViewInit {
         break;
       case EditorEventType.undo:
         undo(this.editor)
-
+        break;
     }
   }
 }
