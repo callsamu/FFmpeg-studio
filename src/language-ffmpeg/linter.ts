@@ -59,7 +59,7 @@ export function newLinter(isUploaded: FileIsUploadedFn) {
     const tree = syntaxTree(view.state);
 
     tree.cursor().iterate(node => {
-      if (node.name === "Argument") {
+      if (node.name === "Parameter") {
         const flag = argumentFlag(node);
         if (!flag) return;
 
@@ -67,7 +67,7 @@ export function newLinter(isUploaded: FileIsUploadedFn) {
         const flagName = toText(flag, view);
 
         if (flagName === "-i" &&
-            isSame(flag.node.nextSibling, node.node.parent) &&
+            isSame(flag.node.nextSibling, node) &&
             !isUploaded(text)) {
           const message = `File "${text}" was not uploaded`;
           diagnostics.push(error(node, message));
