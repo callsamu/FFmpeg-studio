@@ -3,7 +3,11 @@
   <span class="title"> New Command </span>
 </mat-toolbar>
 <mat-sidenav-container class="main">
-  <mat-sidenav mode="side" opened="true" #sidenav class="sidenav">
+  <mat-sidenav
+    #sidenav
+    class="sidenav"
+    opened="{{ !mobileQuery?.matches }}"
+    [mode]="mobileQuery?.matches ? 'over' : 'side'">
     <div *ngIf="ffmpegService.running">
       <div class="menu-item">
         <div class="spinner">
