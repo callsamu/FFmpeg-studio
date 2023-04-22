@@ -6,4 +6,5 @@ export const
   Flag = 4,
   Parameter = 5,
   Argument = 6,
-  String = 7
+  String = 7,
+  Output = 8
