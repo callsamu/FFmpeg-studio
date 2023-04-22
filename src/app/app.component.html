@@ -3,13 +3,31 @@
   <span class="title"> New Command </span>
 </mat-toolbar>
 <mat-sidenav-container class="main">
-  <mat-sidenav #sidenav class="sidenav">
+  <mat-sidenav mode="side" opened="true" #sidenav class="sidenav">
+    <div *ngIf="ffmpegService.running">
+      <div class="menu-item">
+        <div class="spinner">
+          <mat-progress-spinner diameter="20" mode="indeterminate">
+          </mat-progress-spinner>
+          <span><a routerLink="run"> Running Process </a></span>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
+    <div *ngIf="ffmpegService.done">
+      <div class="menu-item">
+        <a routerLink="run">Process Finished</a>
+      </div>
+      <mat-divider></mat-divider>
+    </div>
     <div class="menu-item">
+      <mat-icon>add</mat-icon>
       <a routerLink="new"> New Command </a>
     </div>
     <mat-divider></mat-divider>
     <div class="menu-item">
-      <span class="menu-item"> Commands </span>
+      <mat-icon>chevron_right</mat-icon>
+      <span> Commands </span>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="content">
