@@ -15,8 +15,11 @@ export type Log = {
 })
 export class FFmpegService {
   ffmpeg: FFmpeg;
+
   ready = false;
   running = false;
+  done = false;
+
   log = "";
 
   constructor(
@@ -66,7 +69,9 @@ export class FFmpegService {
 
     this.running = true;
     await this.ffmpeg.run(...args);
+
     this.running = false;
+    this.done = true;
   }
 
   progress(): Observable<number> {
@@ -111,9 +116,15 @@ export class FFmpegService {
     );
   }
 
+  leave(): void {
+    this.clearLog();
+    this.done = false;
+  }
+
   cancel(): void {
     this.running = false;
     this.ready = false;
+    this.done = false;
 
     this.log += "\n\n\nExiting...";
     this.ffmpeg.exit();

@@ -21,6 +21,7 @@ export class FFmpegProcessComponent implements OnInit {
   ) {}
 
   goBack(): void {
+    this.ffmpegService.leave();
     this.location.back();
   }
 
