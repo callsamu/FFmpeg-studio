@@ -39,10 +39,6 @@ export class ArgsService {
     return this.files;
   }
 
-  fileIsUploaded(filename: string): boolean {
-    return this.files.has(filename);
-  }
-
   output(): string | undefined {
     return this.args ?
       this.args[this.args.length-1] :
