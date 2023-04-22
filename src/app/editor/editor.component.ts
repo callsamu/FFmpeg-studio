@@ -55,12 +55,16 @@ export class EditorComponent implements OnInit {
     for (let i = 0; i < fileList.length; i ++) {
       const file = fileList[i];
 
+      const filename = file.name.search(/\s+/) > 0 ?
+        `"${file.name}"` :
+        file.name;
+
       this.eventsToEditor.next({
-        value: file.name,
+        value: filename,
         type: EditorEventType.insertion,
       });
 
-      this.argsService.addFile(file);
+      this.argsService.addFile(new File([file], filename));
     }
   }
 }

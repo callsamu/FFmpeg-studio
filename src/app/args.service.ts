@@ -19,12 +19,12 @@ export class ArgsService {
 
   setArgs(argString: string) {
     const args = argString
-      .split(/\s|\n/)
-      .filter(arg => arg !== "");
+      .match(/("[^"]+"|[^"\s]+)/g);
 
-    if (args && args[0] === "ffmpeg") args.shift();
-    this.args = args;
-    console.log(this.args);
+    if (args && args[0] === "ffmpeg") {
+      args.shift();
+      this.args = args as string[];
+    }
   }
 
   addFile(file: File) {
