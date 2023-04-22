@@ -23,16 +23,16 @@ export class FFmpegService {
     private argsService: ArgsService,
     private messageService: MessageService,
   ) {
-    this.messageService.setMessage({
-      content: "Loading FFmpeg...",
-      type: MessageType.Load,
-    });
-
     this.ffmpeg = createFFmpeg({ log: true });
   }
 
   load(): void {
     this.clearLog();
+
+    this.messageService.setMessage({
+      content: "Loading FFmpeg...",
+      type: MessageType.Load,
+    });
 
     this.ffmpeg.load().then(() => {
       this.messageService.setMessage({
