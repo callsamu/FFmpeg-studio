@@ -2,9 +2,8 @@
 export const
   Command = 1,
   CommandName = 2,
-  FlagAndParameter = 3,
+  FlagPlusParameters = 3,
   Flag = 4,
   Parameter = 5,
   Argument = 6,
-  String = 7,
-  Output = 8
+  String = 7

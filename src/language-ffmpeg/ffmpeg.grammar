@@ -1,22 +1,21 @@
 @top Command { expression }
 @detectDelim
 
-expression { space? CommandName? space (FlagAndParameter)+ (space Output)? space?}
+expression { space? CommandName? space (FlagPlusParameters)+ }
 
-FlagAndParameter { Flag space Parameter space  }
+FlagPlusParameters { Flag (space (Parameter space?)*)? }
 
 Parameter { Argument | String }
-
-Output { Argument }
 
 @tokens {
   CommandName { "ffmpeg" }
 
   Flag { "-" "-"? $[a-zA-Z:_]+ }
 
-  Argument { ![-"\t\n\r ]![\\/*?"<>| \t\n\r]* }
+  Argument { ![-"\t\n\r ]![\\/:*?"<>| \t\n\r]* }
 
   String { '"' (!["\\] | "\\" _)* '"' }
 
   space { $[ \t\n\r]+ }
 }
+
