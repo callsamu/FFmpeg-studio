@@ -4,7 +4,6 @@ import { EditorView } from 'codemirror';
 import { SyntaxNodeRef } from '@lezer/common';
 
 type FileIsUploadedFn = (filename: string) => boolean;
-type IterateFn = (node: SyntaxNodeRef) => void;
 
 const fileRX = /^[a-zA-Z0-9-_]+(?:\.[a-zA-Z0-9]+)$/;
 
@@ -16,6 +15,31 @@ function toText(node: SyntaxNodeRef, view: EditorView): string {
   return view.state.sliceDoc(node.from, node.to).trim();
 }
 
+function isSame(n1: SyntaxNodeRef | null, n2: SyntaxNodeRef | null): boolean {
+  if (n1 === null || n2 === null) return false;
+  return n1?.type?.id === n2?.type?.id;
+}
+
+function argumentFlag(node: SyntaxNodeRef): SyntaxNodeRef | null {
+  let curr = node;
+
+  while (curr.name !== "FlagPlusParameters") {
+    if (!curr.node.parent) return null;
+    curr = curr.node.parent;
+  }
+
+  return curr.node.firstChild;
+}
+
+function warning(node: SyntaxNodeRef, message: string): Diagnostic {
+  return {
+    from: node.from,
+    to: node.to,
+    severity: "warning",
+    message: message
+  };
+}
+
 function error(node: SyntaxNodeRef, message: string): Diagnostic {
   return {
     from: node.from,
@@ -25,20 +49,22 @@ function error(node: SyntaxNodeRef, message: string): Diagnostic {
   };
 }
 
-function iterateOnTree(view: EditorView, iterator: IterateFn) {
-  syntaxTree(view.state).cursor().iterate(iterator);
-}
-
 export function newLinter(isUploaded: FileIsUploadedFn) {
   return linter(view => {
     const diagnostics: Diagnostic[] = [];
 
-    iterateOnTree(view, node => {
-      if (node.name === "Argument") {
-        const text = toText(node, view)
+    const tree = syntaxTree(view.state);
 
-        if (isFilename(text) && !isUploaded(text)) {
-          const message = `File "${text}" was not uploaded.`;
+    tree.cursor().iterate(node => {
+      if (node.name === "Argument") {
+        const flag = argumentFlag(node);
+        if (!flag) return;
+
+        const text = toText(node, view);
+        if (text === "-i" &&
+            isSame(flag.node.nextSibling, node) &&
+            isUploaded(text)) {
+          const message = `File ${text} was not uploaded`;
           diagnostics.push(error(node, message));
         }
       }
