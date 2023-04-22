@@ -16,8 +16,11 @@ function toText(node: SyntaxNodeRef, view: EditorView): string {
 }
 
 function isSame(n1: SyntaxNodeRef | null, n2: SyntaxNodeRef | null): boolean {
-  if (n1 === null || n2 === null) return false;
-  return n1?.type?.id === n2?.type?.id;
+  if (!n1  || !n2) return false;
+
+  return n1.type.id === n2.type.id &&
+         n1.from === n2.from &&
+         n1.to === n1.to;
 }
 
 function argumentFlag(node: SyntaxNodeRef): SyntaxNodeRef | null {
@@ -56,14 +59,17 @@ export function newLinter(isUploaded: FileIsUploadedFn) {
     const tree = syntaxTree(view.state);
 
     tree.cursor().iterate(node => {
+      console.log(node.type.id);
       if (node.name === "Argument") {
         const flag = argumentFlag(node);
         if (!flag) return;
 
         const text = toText(node, view);
-        if (text === "-i" &&
+        const flagName = toText(flag, view);
+
+        if (flagName === "-i" &&
             isSame(flag.node.nextSibling, node) &&
-            isUploaded(text)) {
+            !isUploaded(text)) {
           const message = `File ${text} was not uploaded`;
           diagnostics.push(error(node, message));
         }
