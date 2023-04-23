@@ -11,11 +11,7 @@ export class StorageService {
 
   constructor(
     private messageService: MessageService,
-  ) {
-    window.onstorage = () => {
-      this.subject.next(this.list())
-    };
-  }
+  ) {}
 
   asObservable(): Observable<string[]> {
     return this.subject.asObservable();
@@ -23,13 +19,18 @@ export class StorageService {
 
   save(name: string, script: string) {
     localStorage.setItem(name, script);
+
     this.messageService.setMessage({
       content: `Sucessfully saved: ${name}`,
       type: MessageType.Info,
     })
+
+    this.subject.next(this.list());
   }
 
   fetch(name: string): string | null {
+    console.log(name);
+    console.log(localStorage.getItem(name));
     return localStorage.getItem(name);
   }
 

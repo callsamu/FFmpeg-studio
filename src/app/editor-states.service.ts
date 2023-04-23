@@ -8,6 +8,7 @@ import { lintGutter } from '@codemirror/lint';
 import { ffmpeg } from 'src/language-ffmpeg/language';
 import { oneDark } from './code-editor/code-editor.theme';
 import { minimalSetup } from 'codemirror';
+import { StorageService } from 'src/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class EditorStatesService {
   private states = new Map<string, EditorState>();
 
   constructor(
-    private argsService: ArgsService
+    private argsService: ArgsService,
+    private storageService: StorageService,
   ) {}
 
   fetch(commandName: string): EditorState {
@@ -26,8 +28,10 @@ export class EditorStatesService {
     const files = this.argsService.files;
     const linter = newLinter(file => files.has(file));
 
+    const doc = this.storageService.fetch(commandName);
+
     return EditorState.create({
-      doc: "ffmpeg",
+      doc: doc ?? "ffmpeg",
       extensions: [
         lintGutter(),
         linter,
