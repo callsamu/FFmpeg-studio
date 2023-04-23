@@ -6,6 +6,7 @@ import { FFmpegProcessComponent } from './ffmpeg-process/ffmpeg-process.componen
 const routes: Routes = [
   { path: '', redirectTo: 'new', pathMatch: 'full'},
   { path: 'new', component: EditorComponent },
+  { path: 'command/:name', component: EditorComponent },
   { path: 'run', component: FFmpegProcessComponent },
 ];
 
