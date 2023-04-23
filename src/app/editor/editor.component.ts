@@ -6,6 +6,8 @@ import { EditorEvent, EditorEventType } from '../editor-event';
 import { FFmpegService } from '../ffmpeg.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FileDialogComponent } from '../file-dialog/file-dialog.component';
+import { SaveDialogComponent } from '../save-dialog/save-dialog.component';
+import { StorageService } from 'src/storage.service';
 
 @Component({
   selector: 'app-editor',
@@ -19,6 +21,7 @@ export class EditorComponent implements OnInit {
   eventsToEditor = new Subject<EditorEvent>();
 
   constructor(
+    private storageService: StorageService,
     private dialogService: MatDialog,
     private ffmpegService: FFmpegService,
     private argsService: ArgsService,
@@ -36,11 +39,22 @@ export class EditorComponent implements OnInit {
       type: EditorEventType.retrieval
     });
 
-    console.log(this.command);
-    const command = this.command;
-    setTimeout(() => console.log(command), 3000);
     this.argsService.setArgs(this.command);
     this.router.navigateByUrl("run");
+  }
+
+  save(): void {
+    this.eventsToEditor.next({
+      type: EditorEventType.retrieval
+    });
+
+    this.dialogService.open(SaveDialogComponent, {
+      width: "300px",
+      height: "300x",
+    }).afterClosed().subscribe(value => {
+      if (!value) return;
+      this.storageService.save(value as string, this.commandName());
+    });
   }
 
   undo(): void {

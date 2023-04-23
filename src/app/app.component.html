@@ -28,9 +28,9 @@
       <a routerLink="new"> New Command </a>
     </div>
     <mat-divider></mat-divider>
-    <div class="menu-item">
+    <div *ngFor="let script of scriptListing" class="menu-item">
       <mat-icon>chevron_right</mat-icon>
-      <span> Commands </span>
+      <span> {{ script }}</span>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="content">

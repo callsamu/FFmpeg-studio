@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Save As...</h2>
+<mat-dialog-content class="input">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input
+      [(ngModel)]="value"
+      matInput
+      type="text" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button
+    class="button"
+    color="primary"
+    mat-dialog-close
+    mat-flat-button>Cancel</button>
+  <button
+    class="button"
+    color="primary"
+    [mat-dialog-close]="value"
+    mat-flat-button>Save</button>
+</mat-dialog-actions>

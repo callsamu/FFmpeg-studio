@@ -4,12 +4,14 @@
 }
 
 .buttons {
+  display: flex;
+  flex-wrap: nowrap;
   text-align: center;
   justify-content: center;
   width: 100%;
   height: auto;
-  z-index: 1;
   border-top: 2px solid #212121;
+  overflow-x: scroll;
 }
 
 .button {
