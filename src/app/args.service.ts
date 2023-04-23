@@ -7,7 +7,7 @@ import { MessageService } from './message.service';
 })
 export class ArgsService {
   args: string[] = [];
-  files = new Map<string, File>();
+  readonly files = new Map<string, File>();
 
   constructor(
     private messageService: MessageService,
@@ -33,10 +33,6 @@ export class ArgsService {
       content: `Successfully uploaded: ${file.name}`,
       type: MessageType.Info,
     });
-  }
-
-  getFiles(): Map<string, File> {
-    return this.files;
   }
 
   output(): string | undefined {
