@@ -35,6 +35,14 @@ export class ArgsService {
     });
   }
 
+  filenames(): string[] {
+    const filenames: string[] = [];
+    for (const filename of this.files.keys()) {
+      filenames.push(filename);
+    }
+    return filenames;
+  }
+
   output(): string | undefined {
     return this.args ?
       this.args[this.args.length-1] :
