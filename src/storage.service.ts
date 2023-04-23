@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { MessageType } from './app/message';
+import { MessageService } from './app/message.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +9,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class StorageService {
   private subject = new BehaviorSubject<string[]>(this.list());
 
-  constructor() {
+  constructor(
+    private messageService: MessageService,
+  ) {
     window.onstorage = () => {
       this.subject.next(this.list())
     };
@@ -19,6 +23,10 @@ export class StorageService {
 
   save(name: string, script: string) {
     localStorage.setItem(name, script);
+    this.messageService.setMessage({
+      content: `Sucessfully saved: ${name}`,
+      type: MessageType.Info,
+    })
   }
 
   fetch(name: string): string | null {
