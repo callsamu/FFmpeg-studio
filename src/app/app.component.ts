@@ -1,5 +1,6 @@
 import {MediaMatcher} from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component } from '@angular/core';
+import { Observable } from 'rxjs';
 import { StorageService } from 'src/storage.service';
 import { FFmpegService } from './ffmpeg.service';
 
@@ -10,7 +11,11 @@ import { FFmpegService } from './ffmpeg.service';
 })
 export class AppComponent {
   mobileQuery?: MediaQueryList;
+
   scriptListing?: string[];
+
+  scripts$!: Observable<string[]>;
+  hasActiveLinks = false;
 
   title = 'ffmpeg-studio';
 
@@ -26,8 +31,6 @@ export class AppComponent {
     this._mobileQueryListener = () => this.changeDetectorRef.detectChanges();
     this.mobileQuery.addEventListener("change", this._mobileQueryListener);
 
-    this.storageService.asObservable().subscribe(list => {
-      this.scriptListing = list;
-    })
+    this.scripts$ = this.storageService.asObservable();
   }
 }
