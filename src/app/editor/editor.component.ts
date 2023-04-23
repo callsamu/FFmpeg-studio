@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ArgsService } from '../args.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { EditorEvent, EditorEventType } from '../editor-event';
 import { FFmpegService } from '../ffmpeg.service';
@@ -16,7 +16,7 @@ import { StorageService } from 'src/storage.service';
 })
 export class EditorComponent implements OnInit {
   command = "ffmpeg";
-  cursorStart: number = 0;
+  commandName = "";
 
   eventsToEditor = new Subject<EditorEvent>();
 
@@ -25,12 +25,25 @@ export class EditorComponent implements OnInit {
     private dialogService: MatDialog,
     private ffmpegService: FFmpegService,
     private argsService: ArgsService,
+    private route: ActivatedRoute,
     private router: Router,
   ) {}
 
   ngOnInit() {
     if (!this.ffmpegService.ready) {
       this.ffmpegService.load();
+    }
+
+    if (this.router.url.startsWith('/command')) {
+      const name = this.route.snapshot.paramMap.get('name');
+      if (!name) return;
+
+      const command = this.storageService.fetch(name);
+      if (!command) return;
+
+      this.commandName = name;
+
+      console.log(command);
     }
   }
 
@@ -53,7 +66,7 @@ export class EditorComponent implements OnInit {
       height: "300x",
     }).afterClosed().subscribe(value => {
       if (!value) return;
-      this.storageService.save(value as string, this.commandName());
+      this.storageService.save(value as string, this.command);
     });
   }
 
@@ -61,11 +74,6 @@ export class EditorComponent implements OnInit {
     this.eventsToEditor.next({
       type: EditorEventType.undo
     })
-  }
-
-  commandName(): string {
-    const url = this.router.url;
-    return "";
   }
 
   openFileDialog(): void {
