@@ -1,8 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  font-size: 16px;
+}
+
+* {
+  margin: 0;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 a {
   color: white;
   text-decoration: none;
+}
+
+@media (min-width: 600px) {
+  :root {
+    font-size: 26px;
+  }
 }

@@ -1,17 +1,30 @@
+.toolbar {
+  height: 8%;
+
+}
+
 .title {
   padding-left: 1rem;
 }
 
+.main {
+  margin: 0;
+  height: 92%;
+
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  left: 0;
+  right: 0;
+}
+
 .sidenav {
+  height: 100%;
   background-color: #313131;
 }
 
-.main {
-  height: 90%;
-  overflow: hidden;
-}
-
 .content {
+  height: 100;
   overflow: hidden;
 }
 
