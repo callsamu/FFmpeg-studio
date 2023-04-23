@@ -10,16 +10,15 @@
     [mode]="mobileQuery?.matches ? 'over' : 'side'">
     <div *ngIf="ffmpegService.running">
       <div class="menu-item">
-        <div class="spinner">
-          <mat-progress-spinner diameter="20" mode="indeterminate">
-          </mat-progress-spinner>
-          <span><a routerLink="run"> Running Process </a></span>
-        </div>
+        <mat-progress-spinner diameter="20" mode="indeterminate">
+        </mat-progress-spinner>
+        <span><a routerLink="run"> Running Process </a></span>
       </div>
       <mat-divider></mat-divider>
     </div>
     <div *ngIf="ffmpegService.done">
       <div class="menu-item">
+        <mat-icon>done</mat-icon>
         <a routerLink="run">Process Finished</a>
       </div>
       <mat-divider></mat-divider>

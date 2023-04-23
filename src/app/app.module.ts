@@ -18,6 +18,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { MessageComponent } from './message/message.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { FileDialogComponent } from './file-dialog/file-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     FFmpegProcessComponent,
     CodeEditorComponent,
     MessageComponent,
+    FileDialogComponent,
   ],
   imports: [
     BrowserModule,
