@@ -53,7 +53,7 @@ export class FFmpegService {
 
   async run(): Promise<void> {
     const args = this.argsService.getArgs();
-    const files = this.argsService.getFiles();
+    const files = this.argsService.files;
 
     for (const [name, file] of files) {
       const ab = await file.arrayBuffer();
