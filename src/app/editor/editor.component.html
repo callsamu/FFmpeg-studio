@@ -9,8 +9,12 @@
 
 <div class="buttons">
   <button class="button" (click)="fileUpload.click()">
-    <mat-icon class="icon">attach_file</mat-icon>
-    <p>Add</p>
+    <mat-icon class="icon">attach_file_add</mat-icon>
+    <p>Upload</p>
+  </button>
+  <button class="button" (click)="openFileDialog()">
+    <mat-icon class="icon">folder</mat-icon>
+    <p>Files</p>
   </button>
   <button class="button" (click)="undo()">
     <mat-icon class="icon">undo</mat-icon>

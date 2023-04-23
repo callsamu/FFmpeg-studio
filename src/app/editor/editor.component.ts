@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { EditorEvent, EditorEventType } from '../editor-event';
 import { FFmpegService } from '../ffmpeg.service';
+import { MatDialog } from '@angular/material/dialog';
+import { FileDialogComponent } from '../file-dialog/file-dialog.component';
 
 @Component({
   selector: 'app-editor',
@@ -17,6 +19,7 @@ export class EditorComponent implements OnInit {
   eventsToEditor = new Subject<EditorEvent>();
 
   constructor(
+    private dialogService: MatDialog,
     private ffmpegService: FFmpegService,
     private argsService: ArgsService,
     private router: Router,
@@ -49,6 +52,21 @@ export class EditorComponent implements OnInit {
   commandName(): string {
     const url = this.router.url;
     return "";
+  }
+
+  openFileDialog(): void {
+    const filenames = this.argsService.filenames();
+
+    this.dialogService.open(FileDialogComponent, {
+      height: !filenames ? '250px' : '200px',
+      width: '250px',
+      data: {files: filenames}
+    }).afterClosed().subscribe(filename => {
+      this.eventsToEditor.next({
+        type: EditorEventType.insertion,
+        value: filename as string,
+      });
+    });
   }
 
   onFileSelected(event: Event): void {

@@ -1,1 +1,14 @@
-<p>file-dialog works!</p>
+<div class="files">
+  <button
+    *ngFor="let file of data.files"
+    (click)="close(file)"
+    mat-button>{{ file }}</button>
+</div>
+<div class="no-files" *ngIf="data.files.length === 0">
+  <h2> There are no uploaded files (yet!) </h2>
+  <button
+    class="button"
+    (click)="close()"
+    mat-flat-button>Dismiss</button>
+</div>
+
