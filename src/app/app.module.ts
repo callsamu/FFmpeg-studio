@@ -15,10 +15,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { MessageComponent } from './message/message.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FileDialogComponent } from './file-dialog/file-dialog.component';
+import { SaveDialogComponent } from './save-dialog/save-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { FileDialogComponent } from './file-dialog/file-dialog.component';
     CodeEditorComponent,
     MessageComponent,
     FileDialogComponent,
+    SaveDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,6 +46,8 @@ import { FileDialogComponent } from './file-dialog/file-dialog.component';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatDividerModule,
+    MatFormFieldModule,
+    MatInputModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable
