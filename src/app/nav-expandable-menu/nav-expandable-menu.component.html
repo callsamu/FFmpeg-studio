@@ -1,12 +1,10 @@
 <ng-container *ngIf="expandable; else navListTemplate">
-  <mat-expansion-panel expandOnActiveLink [links]="navListItems">
-    <mat-expansion-panel-header>
+  <mat-expansion-panel class="panel" expandOnActiveLink [links]="navListItems">
+    <mat-expansion-panel-header class="header">
       <span>Commands</span>
     </mat-expansion-panel-header>
-    <mat-nav-list>
-      <ng-container *ngTemplateOutlet="navListTemplate">
-      </ng-container>
-    </mat-nav-list>
+    <ng-container *ngTemplateOutlet="navListTemplate">
+    </ng-container>
   </mat-expansion-panel>
 </ng-container>
 <ng-template #navListTemplate>
