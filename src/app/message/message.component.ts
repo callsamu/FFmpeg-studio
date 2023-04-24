@@ -31,10 +31,8 @@ export class MessageComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.span);
     if (!this.span) return;
 
-    console.log("animating");
     const animation = this.animationBuilder.build([
       style({ width: "0" }),
       animate('2s', style({ width: '100%'}))

@@ -29,8 +29,6 @@ export class StorageService {
   }
 
   fetch(name: string): string | null {
-    console.log(name);
-    console.log(localStorage.getItem(name));
     return localStorage.getItem(name);
   }
 
