@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ArgsService } from '../args.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Router, ActivatedRoute, ActivationEnd, ActivatedRouteSnapshot } from '@angular/router';
 import { EditorEvent, EditorEventType } from '../editor-event';
 import { FFmpegService } from '../ffmpeg.service';
 import { MatDialog } from '@angular/material/dialog';
 import { FileDialogComponent } from '../file-dialog/file-dialog.component';
 import { SaveDialogComponent } from '../save-dialog/save-dialog.component';
 import { StorageService } from 'src/storage.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-editor',
@@ -29,21 +29,31 @@ export class EditorComponent implements OnInit {
     private router: Router,
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     if (!this.ffmpegService.ready) {
       this.ffmpegService.load();
     }
 
+    this.router.events.subscribe(event => {
+      if (!(event instanceof ActivationEnd)) return;
+      this.routerToCommand(event.snapshot);
+    })
+
+    this.routerToCommand(this.route.snapshot);
+  }
+
+  routerToCommand(snapshot: ActivatedRouteSnapshot): void {
     if (this.router.url.startsWith('/command')) {
-      const name = this.route.snapshot.paramMap.get('name');
+      const name = snapshot.paramMap.get('name');
       if (!name) return;
 
       const command = this.storageService.fetch(name);
       if (!command) return;
 
       this.commandName = name;
-
-      console.log(command);
+      this.command = command;
+    } else {
+      this.command = "";
     }
   }
 

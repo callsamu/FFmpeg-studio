@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { EditorView, } from 'codemirror';
 import { undo } from '@codemirror/commands';
 import { EditorEvent, EditorEventType } from '../editor-event';
@@ -10,7 +10,7 @@ import { EditorStatesService } from '../editor-states.service';
   templateUrl: './code-editor.component.html',
   styleUrls: ['./code-editor.component.scss']
 })
-export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, OnChanges {
   @ViewChild('editor') element?: ElementRef;
 
   @Input() events?: Observable<EditorEvent>;
@@ -38,9 +38,21 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initEditor();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes['commandName'] || !this.editor) return
+
+    const { currentValue, previousValue } = changes['commandName'];
+
+    if (currentValue !== previousValue) {
+      this.stateService.save(previousValue, this.editor.state);
+      this.editor.setState(this.stateService.fetch(currentValue));
+    }
+  }
+
   initEditor(): void {
     if (!this.element) return;
 
+    console.info(this.commandName);
     this.editor = new EditorView({
       parent: this.element.nativeElement,
       state: this.stateService.fetch(this.commandName),
