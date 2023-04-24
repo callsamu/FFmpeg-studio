@@ -1,7 +1,7 @@
-import { AfterContentInit, Directive, Input, QueryList } from "@angular/core";
+import { Directive, Input, QueryList } from "@angular/core";
 import { MatExpansionPanel } from "@angular/material/expansion";
 import { RouterLinkActive } from "@angular/router";
-import { filter, from, of, mergeMap, tap, map, merge, reduce, scan } from "rxjs";
+import { merge, scan } from "rxjs";
 
 @Directive({
   selector: '[expandOnActiveLink]',
