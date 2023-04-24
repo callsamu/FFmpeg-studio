@@ -15,8 +15,13 @@
 }
 
 .button {
-  margin: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
   border: none;
   color: white;
   background-color: rgba($color: #000000, $alpha: 0.0)
+}
+
+.button:hover {
+  background-color: #212121;
 }
