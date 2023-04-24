@@ -61,13 +61,17 @@ export class EditorComponent implements OnInit {
       type: EditorEventType.retrieval
     });
 
-    this.dialogService.open(SaveDialogComponent, {
-      width: "300px",
-      height: "300x",
-    }).afterClosed().subscribe(value => {
-      if (!value) return;
-      this.storageService.save(value as string, this.command);
-    });
+    if (this.commandName !== "") {
+      this.storageService.save(this.commandName, this.command);
+    } else {
+      this.dialogService.open(SaveDialogComponent, {
+        width: "300px",
+        height: "300x",
+      }).afterClosed().subscribe(value => {
+        if (!value) return;
+        this.storageService.save(value as string, this.command);
+      });
+    }
   }
 
   undo(): void {
