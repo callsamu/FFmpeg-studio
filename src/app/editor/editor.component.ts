@@ -8,6 +8,9 @@ import { FileDialogComponent } from '../file-dialog/file-dialog.component';
 import { SaveDialogComponent } from '../save-dialog/save-dialog.component';
 import { StorageService } from 'src/storage.service';
 import { Subject } from 'rxjs';
+import { EditorStatesService } from '../editor-states.service';
+
+
 
 @Component({
   selector: 'app-editor',
@@ -15,12 +18,15 @@ import { Subject } from 'rxjs';
   styleUrls: ['./editor.component.scss']
 })
 export class EditorComponent implements OnInit {
+  readonly namelessCommand = "New Command";
   command = "ffmpeg";
-  commandName = "";
+  tabs = new Set<string | null>;
+  commandName: string | null = null;
 
   eventsToEditor = new Subject<EditorEvent>();
 
   constructor(
+    private editorService: EditorStatesService,
     private storageService: StorageService,
     private dialogService: MatDialog,
     private ffmpegService: FFmpegService,
@@ -39,10 +45,12 @@ export class EditorComponent implements OnInit {
       this.routerToCommand(event.snapshot);
     })
 
+    const buffers = this.editorService.openBuffers();
+    buffers.forEach(buffer => this.addTab(buffer));
     this.routerToCommand(this.route.snapshot);
   }
 
-  routerToCommand(snapshot: ActivatedRouteSnapshot): void {
+  private routerToCommand(snapshot: ActivatedRouteSnapshot): void {
     if (this.router.url.startsWith('/command')) {
       const name = snapshot.paramMap.get('name');
       if (!name) return;
@@ -53,8 +61,15 @@ export class EditorComponent implements OnInit {
       this.commandName = name;
       this.command = command;
     } else {
-      this.command = "";
+      this.commandName = null;
     }
+
+    this.addTab(this.commandName);
+    console.log(this.tabs);
+  }
+
+  private addTab(commandName: string | null): void {
+    this.tabs.add(commandName);
   }
 
   run(): void {
@@ -71,7 +86,7 @@ export class EditorComponent implements OnInit {
       type: EditorEventType.retrieval
     });
 
-    if (this.commandName !== "") {
+    if (this.commandName) {
       this.storageService.save(this.commandName, this.command);
     } else {
       this.dialogService.open(SaveDialogComponent, {

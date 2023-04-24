@@ -14,21 +14,23 @@ import { StorageService } from 'src/storage.service';
   providedIn: 'root'
 })
 export class EditorStatesService {
-  private states = new Map<string, EditorState>();
+  private states = new Map<string | null, EditorState>();
 
   constructor(
     private argsService: ArgsService,
     private storageService: StorageService,
   ) {}
 
-  fetch(commandName: string): EditorState {
+  fetch(commandName: string | null): EditorState {
     const state = this.states.get(commandName)
     if (state) return state;
 
     const files = this.argsService.files;
     const linter = newLinter(file => files.has(file));
 
-    const doc = this.storageService.fetch(commandName);
+    const doc = commandName ?
+      this.storageService.fetch(commandName ?? "") :
+      null;
 
     return EditorState.create({
       doc: doc ?? "ffmpeg",
@@ -44,8 +46,15 @@ export class EditorStatesService {
     });
   }
 
-  save(commandName: string, state: EditorState) {
+  save(commandName: string | null, state: EditorState) {
     this.states.set(commandName, state);
   }
 
+  openBuffers(): (string | null)[] {
+    const keys: (string | null)[] = [];
+    for (const key of this.states.keys()) {
+      keys.push(key);
+    }
+    return keys;
+  }
 }

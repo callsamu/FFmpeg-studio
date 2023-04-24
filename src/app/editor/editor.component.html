@@ -1,37 +1,50 @@
-<app-code-editor
-  [events]="eventsToEditor.asObservable()"
-  [commandName]="commandName"
-  (code)="command = $event">
+<nav mat-tab-nav-bar
+  mat-stretch-tabs="false"
+  mat-align-tabs="start"
+  [tabPanel]="navPanel">
+  <a mat-tab-link *ngFor="let tab of tabs"
+    [active]="tab === commandName"
+    [routerLink]="tab ? '/command/' + tab : '/new' ">
+    {{ tab ?? "New Command" }}
+  </a>
+</nav>
 
-</app-code-editor>
+<mat-tab-nav-panel #navPanel>
+  <app-code-editor
+    [events]="eventsToEditor.asObservable()"
+    [commandName]="commandName"
+    (code)="command = $event">
+  </app-code-editor>
 
-<div class="buttons">
-  <button class="button" (click)="fileUpload.click()">
-    <mat-icon class="icon">attach_file_add</mat-icon>
-    <p>Upload</p>
-  </button>
-  <button class="button" (click)="openFileDialog()">
-    <mat-icon class="icon">folder</mat-icon>
-    <p>Files</p>
-  </button>
-  <button class="button" (click)="undo()">
-    <mat-icon class="icon">undo</mat-icon>
-    <p>Undo</p>
-  </button>
-  <button class="button" (click)="save()">
-    <mat-icon class="icon">save</mat-icon>
-    <p>Save</p>
-  </button>
-  <button class="button" (click)="run()">
-    <mat-icon class="icon">forward</mat-icon>
-    <p>Run</p>
-  </button>
-</div>
+  <app-message></app-message>
+
+  <div class="buttons">
+    <button class="button" (click)="fileUpload.click()">
+      <mat-icon class="icon">attach_file_add</mat-icon>
+      <p>Upload</p>
+    </button>
+    <button class="button" (click)="openFileDialog()">
+      <mat-icon class="icon">folder</mat-icon>
+      <p>Files</p>
+    </button>
+    <button class="button" (click)="undo()">
+      <mat-icon class="icon">undo</mat-icon>
+      <p>Undo</p>
+    </button>
+    <button class="button" (click)="save()">
+      <mat-icon class="icon">save</mat-icon>
+      <p>Save</p>
+    </button>
+    <button class="button" (click)="run()">
+      <mat-icon class="icon">forward</mat-icon>
+      <p>Run</p>
+    </button>
+  </div>
+<mat-tab-nav-panel #navPanel>
 
 <input
   #fileUpload
   class="hide"
   type="file"
   (change)="onFileSelected($event)">
-
 

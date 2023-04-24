@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'app-file-dialog',
   templateUrl: './file-dialog.component.html',
-  styleUrls: ['./file-dialog.component.scss']
+  styleUrls: ['./file-dialog.component.scss'],
 })
 export class FileDialogComponent {
   value?: string;

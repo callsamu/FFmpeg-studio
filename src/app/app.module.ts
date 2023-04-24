@@ -19,6 +19,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatListModule } from '@angular/material/list';
+import { MatTabsModule } from '@angular/material/tabs';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { MessageComponent } from './message/message.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -55,6 +56,7 @@ import { NavExpandableMenuComponent } from './nav-expandable-menu/nav-expandable
     MatFormFieldModule,
     MatInputModule,
     MatListModule,
+    MatTabsModule,
     ExpandOnActiveLinkDirective,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),

@@ -14,7 +14,7 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
   @ViewChild('editor') element?: ElementRef;
 
   @Input() events?: Observable<EditorEvent>;
-  @Input() commandName = "";
+  @Input() commandName: string | null = null;
 
   @Output() code = new EventEmitter<string>;
 
