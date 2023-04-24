@@ -17,11 +17,15 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { MessageComponent } from './message/message.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { FileDialogComponent } from './file-dialog/file-dialog.component';
 import { SaveDialogComponent } from './save-dialog/save-dialog.component';
+import { ExpandOnActiveLinkDirective } from './expand-on-active-link.directive';
+import { NavExpandableMenuComponent } from './nav-expandable-menu/nav-expandable-menu.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +36,7 @@ import { SaveDialogComponent } from './save-dialog/save-dialog.component';
     MessageComponent,
     FileDialogComponent,
     SaveDialogComponent,
+    NavExpandableMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,8 +51,11 @@ import { SaveDialogComponent } from './save-dialog/save-dialog.component';
     MatDialogModule,
     MatProgressSpinnerModule,
     MatDividerModule,
+    MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
+    MatListModule,
+    ExpandOnActiveLinkDirective,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

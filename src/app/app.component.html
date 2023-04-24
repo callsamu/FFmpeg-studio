@@ -14,29 +14,29 @@
         </mat-progress-spinner>
         <span> Running Process </span>
       </div>
-      <mat-divider></mat-divider>
     </a>
     <a *ngIf="ffmpegService.done" routerLink="run" routerLinkActive="active">
       <div class="menu-item">
         Process Finished
       </div>
-      <mat-divider></mat-divider>
     </a>
     <a routerLink="new" routerLinkActive="active">
       <div class="menu-item">
          New Command
       </div>
     </a>
-    <mat-divider></mat-divider>
-    <a *ngFor="let script of scripts$ | async"
-       routerLink="command/{{ script }}"
-       routerLinkActive="active">
-      <div class="menu-item">
-        <mat-icon>chevron_right</mat-icon>
-        <span> {{ script }}</span>
-        <mat-divider></mat-divider>
+    <app-nav-expandable-menu class="expansion">
+      <div *ngFor="let command of commands$ | async">
+        <a
+          [routerLinkActiveOptions]="{exact: true}"
+          routerLink="/command/{{command}}"
+          routerLinkActive="active">
+          <div class="menu-item expended">
+            <span class="expanded"> {{ command }} </span>
+          </div>
+        </a>
       </div>
-    </a>
+    </app-nav-expandable-menu>
   </mat-sidenav>
   <mat-sidenav-content class="content">
     <router-outlet></router-outlet>
