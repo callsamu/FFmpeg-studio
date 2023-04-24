@@ -4,9 +4,8 @@ import { EditorComponent } from './editor/editor.component';
 import { FFmpegProcessComponent } from './ffmpeg-process/ffmpeg-process.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'new', pathMatch: 'full'},
-  { path: 'new', component: EditorComponent },
-  { path: 'command/:name', component: EditorComponent },
+  { path: '', redirectTo: 'command', pathMatch: 'full'},
+  { path: 'command', component: EditorComponent },
   { path: 'run', component: FFmpegProcessComponent },
 ];
 

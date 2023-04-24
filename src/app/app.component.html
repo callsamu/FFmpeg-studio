@@ -20,7 +20,10 @@
         Process Finished
       </div>
     </a>
-    <a routerLink="new" routerLinkActive="active">
+    <a
+       routerLink="command"
+       routerLinkActive="active"
+       [routerLinkActiveOptions]="routerMatchOptions">
       <div class="menu-item">
          New Command
       </div>
@@ -28,10 +31,10 @@
     <app-nav-expandable-menu class="expansion">
       <div *ngFor="let command of commands$ | async">
         <a
-          [routerLinkActiveOptions]="{exact: true}"
-          routerLink="/command/{{command}}"
+          [routerLinkActiveOptions]="routerMatchOptions"
+          [routerLink]="['/command', {name: command}]"
           routerLinkActive="active">
-          <div class="menu-item expended">
+          <div class="menu-item">
             <span class="expanded"> {{ command }} </span>
           </div>
         </a>

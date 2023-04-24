@@ -51,17 +51,14 @@ export class EditorComponent implements OnInit {
   }
 
   private routerToCommand(snapshot: ActivatedRouteSnapshot): void {
-    if (this.router.url.startsWith('/command')) {
-      const name = snapshot.paramMap.get('name');
-      if (!name) return;
+    const name = snapshot.paramMap.get('name');
 
+    if (name) {
       const command = this.storageService.fetch(name);
       if (!command) return;
 
       this.commandName = name;
       this.command = command;
-    } else {
-      this.commandName = null;
     }
 
     this.addTab(this.commandName);

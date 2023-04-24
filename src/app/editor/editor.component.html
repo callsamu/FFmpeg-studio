@@ -4,7 +4,7 @@
   [tabPanel]="navPanel">
   <a mat-tab-link *ngFor="let tab of tabs"
     [active]="tab === commandName"
-    [routerLink]="tab ? '/command/' + tab : '/new' ">
+    [routerLink]="tab ? ['/command', {name: tab}] : '/command' ">
     {{ tab ?? "New Command" }}
   </a>
 </nav>

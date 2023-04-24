@@ -16,7 +16,13 @@ export class AppComponent {
   scriptListing?: string[];
 
   commands$!: Observable<string[]>;
-  hasActiveLinks = false;
+
+  readonly routerMatchOptions = {
+    matrixParams: 'exact' as const,
+    queryParams: 'exact' as const,
+    paths: 'exact' as const,
+    fragment: 'exact' as const,
+  };
 
   title = 'ffmpeg-studio';
 
