@@ -6,6 +6,13 @@
     [active]="tab === commandName"
     [routerLink]="tab ? ['/command', {name: tab}] : '/command' ">
     {{ tab ?? "New Command" }}
+    <button *ngIf="tabs.size > 1"
+      style="pointer-events: auto;"
+      (click)="closeTab($event, tab)"
+      class="close"
+      mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
   </a>
 </nav>
 

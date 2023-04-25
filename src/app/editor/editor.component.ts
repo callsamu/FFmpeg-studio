@@ -10,8 +10,6 @@ import { StorageService } from 'src/storage.service';
 import { Subject } from 'rxjs';
 import { EditorStatesService } from '../editor-states.service';
 
-
-
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
@@ -20,7 +18,7 @@ import { EditorStatesService } from '../editor-states.service';
 export class EditorComponent implements OnInit {
   readonly namelessCommand = "New Command";
   command = "ffmpeg";
-  tabs = new Set<string | null>;
+  tabs = new Set<string | null>();
   commandName: string | null = null;
 
   eventsToEditor = new Subject<EditorEvent>();
@@ -65,8 +63,22 @@ export class EditorComponent implements OnInit {
     console.log(this.tabs);
   }
 
-  private addTab(commandName: string | null): void {
+  addTab(commandName: string | null): void {
     this.tabs.add(commandName);
+  }
+
+  closeTab(event: MouseEvent, commandName: string | null): void {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const array = Array.from(this.tabs);
+    const idx = array.indexOf(commandName);
+    const next = array[idx === 0 ? 1 : idx - 1];
+
+    this.tabs.delete(commandName);
+    this.editorService.delete(commandName);
+
+    this.router.navigate(['command', {name: next}]);
   }
 
   run(): void {

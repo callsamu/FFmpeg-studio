@@ -50,6 +50,10 @@ export class EditorStatesService {
     this.states.set(commandName, state);
   }
 
+  delete(commandName: string | null) {
+    this.states.delete(commandName);
+  }
+
   openBuffers(): (string | null)[] {
     const keys: (string | null)[] = [];
     for (const key of this.states.keys()) {
