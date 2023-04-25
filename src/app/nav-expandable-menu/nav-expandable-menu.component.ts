@@ -7,7 +7,7 @@ import { RouterLinkActive } from '@angular/router';
   styleUrls: ['./nav-expandable-menu.component.scss']
 })
 export class NavExpandableMenuComponent {
-  @ContentChildren(RouterLinkActive)
+  @ContentChildren(RouterLinkActive,  {descendants: true})
   navListItems: QueryList<RouterLinkActive> | null = null;
 
   @Input() expandable = true;
