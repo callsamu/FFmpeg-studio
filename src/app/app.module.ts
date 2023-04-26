@@ -65,7 +65,10 @@ import { NavExpandableMenuComponent } from './nav-expandable-menu/nav-expandable
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  providers: [],
+  providers: [{
+    provide: Storage,
+    useValue: localStorage
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

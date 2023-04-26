@@ -11,6 +11,7 @@ export class StorageService {
 
   constructor(
     private messageService: MessageService,
+    private storage: Storage,
   ) {}
 
   asObservable(): Observable<string[]> {
@@ -18,7 +19,7 @@ export class StorageService {
   }
 
   save(name: string, script: string) {
-    localStorage.setItem(name, script);
+    this.storage.setItem(name, script);
 
     this.messageService.setMessage({
       content: `Sucessfully saved: ${name}`,
@@ -29,13 +30,13 @@ export class StorageService {
   }
 
   fetch(name: string): string | null {
-    return localStorage.getItem(name);
+    return this.storage.getItem(name);
   }
 
   private list(): string[] {
     const names: string[] = [];
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
+    for (let i = 0; i < this.storage.length; i++) {
+      const key = this.storage.key(i);
       if (key) names.push(key);
     }
     return names;
