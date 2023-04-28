@@ -27,6 +27,7 @@ import { FileDialogComponent } from './file-dialog/file-dialog.component';
 import { SaveDialogComponent } from './save-dialog/save-dialog.component';
 import { ExpandOnActiveLinkDirective } from './expand-on-active-link.directive';
 import { NavExpandableMenuComponent } from './nav-expandable-menu/nav-expandable-menu.component';
+import { ffmpegServiceProvider } from './ffmpeg.service.provider';
 
 @NgModule({
   declarations: [
@@ -65,10 +66,10 @@ import { NavExpandableMenuComponent } from './nav-expandable-menu/nav-expandable
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  providers: [{
-    provide: Storage,
-    useValue: localStorage
-  }],
+  providers: [
+    {provide: Storage, useValue: localStorage},
+    ffmpegServiceProvider,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

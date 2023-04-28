@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-import { createFFmpeg, FFmpeg } from '@ffmpeg/ffmpeg';
+import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { Observable, Observer, } from 'rxjs';
 import { ArgsService } from './args.service';
 import { MessageType } from './message';
@@ -10,12 +9,7 @@ export type Log = {
   type: string;
 }
 
-@Injectable({
-  providedIn: 'root'
-})
 export class FFmpegService {
-  ffmpeg: FFmpeg;
-
   ready = false;
   running = false;
   done = false;
@@ -23,11 +17,10 @@ export class FFmpegService {
   log = "";
 
   constructor(
+    private ffmpeg: FFmpeg,
     private argsService: ArgsService,
     private messageService: MessageService,
-  ) {
-    this.ffmpeg = createFFmpeg({ log: true });
-  }
+  ) {}
 
   load(): void {
     this.clearLog();
