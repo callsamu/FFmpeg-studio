@@ -55,12 +55,11 @@ export class EditorComponent implements OnInit {
       const command = this.storageService.fetch(name);
       if (!command) return;
 
-      this.commandName = name;
       this.command = command;
     }
 
+    this.commandName = name;
     this.addTab(this.commandName);
-    console.log(this.tabs);
   }
 
   addTab(commandName: string | null): void {
@@ -78,7 +77,8 @@ export class EditorComponent implements OnInit {
     this.tabs.delete(commandName);
     this.editorService.delete(commandName);
 
-    this.router.navigate(['command', {name: next}]);
+    const url = ['command'];
+    this.router.navigate(next ? url : [...url, {command: next}]);
   }
 
   run(): void {
