@@ -52,7 +52,6 @@ export class CodeEditorComponent implements OnInit, AfterViewInit, OnDestroy, On
   initEditor(): void {
     if (!this.element) return;
 
-    console.info(this.commandName);
     this.editor = new EditorView({
       parent: this.element.nativeElement,
       state: this.stateService.fetch(this.commandName),
