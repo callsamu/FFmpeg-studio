@@ -22,7 +22,7 @@ export class FFmpegService {
     private messageService: MessageService,
   ) {}
 
-  load(): void {
+  async load(): Promise<void> {
     this.clearLog();
 
     this.messageService.setMessage({
@@ -30,14 +30,14 @@ export class FFmpegService {
       type: MessageType.Load,
     });
 
-    this.ffmpeg.load().then(() => {
-      this.messageService.setMessage({
-        content: "FFmpeg is ready!",
-        type: MessageType.Info,
-      });
-      this.clearLog();
-      this.ready = true
+    await this.ffmpeg.load();
+
+    this.messageService.setMessage({
+      content: "FFmpeg is ready!",
+      type: MessageType.Info,
     });
+    this.clearLog();
+    this.ready = true
   }
 
   clearLog(): void {
@@ -45,19 +45,19 @@ export class FFmpegService {
   }
 
   async run(): Promise<void> {
+    if (!this.ready) {
+      this.log += "ERROR: ffmpeg is not loaded";
+      throw new Error("ffmpeg is not loaded");
+    }
+
     const args = this.argsService.getArgs();
-    const files = this.argsService.files;
+    const files = this.argsService.getFiles();
 
     for (const [name, file] of files) {
       const ab = await file.arrayBuffer();
       const array = new Uint8Array(ab);
       this.ffmpeg.FS("writeFile", name, array);
       console.log(name);
-    }
-
-    if (!this.ready) {
-      this.log += "ERROR: ffmpeg is not loaded";
-      throw new Error("ffmpeg is not loaded");
     }
 
     this.running = true;
