@@ -1,7 +1,6 @@
 import {MediaMatcher} from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { StorageService } from 'src/storage.service';
 import { FFmpegService } from './ffmpeg.service';
 
@@ -12,8 +11,6 @@ import { FFmpegService } from './ffmpeg.service';
 })
 export class AppComponent {
   mobileQuery?: MediaQueryList;
-
-  scriptListing?: string[];
 
   commands$!: Observable<string[]>;
 
@@ -41,7 +38,7 @@ export class AppComponent {
     this.commands$ = this.storageService.asObservable();
   }
 
-  cmdLink(cmd: string): string {
-    return `command/${cmd}`;
+  format(cmd: string): string {
+    return cmd.length > 10 ? cmd.slice(0, 10) + "..." : cmd;
   }
 }

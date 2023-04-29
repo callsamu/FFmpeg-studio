@@ -14,30 +14,36 @@
         </mat-progress-spinner>
         <span> Running Process </span>
       </div>
+      <mat-divider></mat-divider>
     </a>
     <a *ngIf="ffmpegService.done" routerLink="run" routerLinkActive="active">
       <div class="menu-item">
         Process Finished
       </div>
+      <mat-divider></mat-divider>
     </a>
-    <a
-       routerLink="command"
-       routerLinkActive="active"
-       [routerLinkActiveOptions]="routerMatchOptions">
+    <a routerLink="command" routerLinkActive="active" [routerLinkActiveOptions]="routerMatchOptions">
       <div class="menu-item">
          New Command
       </div>
+      <mat-divider></mat-divider>
     </a>
     <app-nav-expandable-menu class="expansion">
       <div *ngFor="let command of commands$ | async">
-        <a
-          [routerLinkActiveOptions]="routerMatchOptions"
-          [routerLink]="['/command', {name: command}]"
-          routerLinkActive="active">
-          <div class="menu-item">
-            <span class="expanded"> {{ command }} </span>
+        <div class="space-between">
+          <a class="menu-item expanded" [routerLinkActiveOptions]="routerMatchOptions" [routerLink]="['/command', {name: command}]" routerLinkActive="active">
+            <span class="expanded"> {{ format(command) }} </span>
+          </a>
+          <div>
+            <button mat-icon-button>
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button>
+              <mat-icon>delete</mat-icon>
+            </button>
           </div>
-        </a>
+        </div>
+        <mat-divider></mat-divider>
       </div>
     </app-nav-expandable-menu>
   </mat-sidenav>
