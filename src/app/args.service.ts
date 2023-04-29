@@ -27,6 +27,10 @@ export class ArgsService {
     }
   }
 
+  getFiles(): Map<string, File> {
+    return this.files;
+  }
+
   addFile(file: File) {
     this.files.set(file.name, file);
     this.messageService.setMessage({
