@@ -49,7 +49,7 @@ export class EditorComponent implements OnInit {
   }
 
   private routerToCommand(snapshot: ActivatedRouteSnapshot): void {
-    const name = snapshot.paramMap.get('name');
+    const name = snapshot.params['name'];
 
     if (name) {
       const command = this.storageService.fetch(name);
@@ -78,7 +78,7 @@ export class EditorComponent implements OnInit {
     this.editorService.delete(commandName);
 
     const url = ['command'];
-    this.router.navigate(next ? url : [...url, {command: next}]);
+    this.router.navigate(!next ? url : [...url, {name: next}]);
   }
 
   run(): void {
@@ -136,18 +136,20 @@ export class EditorComponent implements OnInit {
     if (!fileList) return;
 
     for (let i = 0; i < fileList.length; i ++) {
-      const file = fileList[i];
-
-      const filename = file.name.search(/\s+/) > 0 ?
-        `"${file.name}"` :
-        file.name;
-
-      this.eventsToEditor.next({
-        value: filename,
-        type: EditorEventType.insertion,
-      });
-
-      this.argsService.addFile(new File([file], filename));
+      this.uploadFile(fileList[i]);
     }
+  }
+
+  uploadFile(file: File): void {
+    const filename = file.name.search(/\s+/) > 0 ?
+      `"${file.name}"` :
+      file.name;
+
+    this.eventsToEditor.next({
+      value: filename,
+      type: EditorEventType.insertion,
+    });
+
+    this.argsService.addFile(new File([file], filename));
   }
 }
