@@ -15,7 +15,7 @@ describe('EditorStatesService', () => {
     });
 
     const spyArgs = jasmine.createSpyObj('ArgsService', {
-      files: new Map<string, File>(),
+      getFiles: new Map<string, File>(),
     });
 
     TestBed.configureTestingModule({ providers: [
@@ -32,15 +32,11 @@ describe('EditorStatesService', () => {
 
   describe('#fetch created editor state', () => {
     it(`should be a new command if command name name is null`, () => {
-
       const state = service.fetch(null);
       expect(state.doc.toString()).toBe('ffmpeg');
     })
     it(`state for command name should contain it's document in storage`, () => {
-      shouldReturnSomething = true;
-
       const state = service.fetch("command");
-      console.log()
       expect(state.doc.toString()).toBe(command);
     });
   });

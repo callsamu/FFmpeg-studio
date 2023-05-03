@@ -25,7 +25,7 @@ export class EditorStatesService {
     const state = this.states.get(commandName)
     if (state) return state;
 
-    const files = this.argsService.files;
+    const files = this.argsService.getFiles();
     const linter = newLinter(file => files.has(file));
 
     const doc = commandName ?
