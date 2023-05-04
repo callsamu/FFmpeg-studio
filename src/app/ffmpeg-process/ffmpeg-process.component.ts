@@ -45,7 +45,6 @@ export class FFmpegProcessComponent implements OnInit {
     try {
       this.ffmpegService.run().then(() => {
         const output = this.ffmpegService.output();
-        console.log(output);
         if (output) this.output = output;
       }).catch(() => {
         console.log("Exiting ffmpeg...")
